@@ -11,8 +11,7 @@
         android:layout_height="match_parent"
         android:id="@+id/fragment_welcome"
         tools:layout="@layout/fragment_welcome"
-        class="serializerteam.serializer.WelcomeFragment"
-        ></fragment>
+        class="serializerteam.serializer.WelcomeFragment"></fragment>
 
 
 </android.support.constraint.ConstraintLayout>
