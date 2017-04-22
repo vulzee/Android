@@ -8,10 +8,5 @@
         android:layout_height="wrap_content"
         android:text="FANCY ANIMACJA - BĘDZIE"
         />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="swipe left to discover world of movies and tv shows"
-        />
 
 </LinearLayout>
