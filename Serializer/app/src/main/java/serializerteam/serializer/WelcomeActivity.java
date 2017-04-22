@@ -9,11 +9,13 @@ import android.view.MotionEvent;
 public class WelcomeActivity extends AppCompatActivity {
     private float x1,x2;
     static final int MIN_DISTANCE = 150;
+    RadarView mRadarView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        mRadarView = (RadarView) findViewById(R.id.radarView);
     }
 
     @Override

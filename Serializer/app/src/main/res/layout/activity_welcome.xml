@@ -6,12 +6,15 @@
     android:layout_height="match_parent"
     tools:context="serializerteam.serializer.WelcomeActivity">
 
-    <fragment
+    <serializerteam.serializer.RadarView
+        android:id="@+id/radarView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/fragment_welcome"
-        tools:layout="@layout/fragment_welcome"
-        class="serializerteam.serializer.WelcomeFragment"></fragment>
-
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Swipe left"/>
 
 </android.support.constraint.ConstraintLayout>
