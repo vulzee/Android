@@ -12,7 +12,7 @@ public class MyShowsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_my_shows, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_shows, container, false);
 
         return view;
     }
