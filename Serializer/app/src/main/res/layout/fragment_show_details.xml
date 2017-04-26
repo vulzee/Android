@@ -67,6 +67,7 @@
             android:paddingTop="@dimen/top_padding"
             android:paddingLeft="@dimen/fab_margin"
             android:paddingRight="@dimen/fab_margin"
+            android:textStyle="bold"
             android:text="@string/description"
             />
 
@@ -96,6 +97,7 @@
             android:paddingTop="@dimen/top_padding"
             android:paddingLeft="@dimen/fab_margin"
             android:paddingRight="@dimen/fab_margin"
+            android:textStyle="bold"
             android:text="@string/nextepisode"
             />
         <LinearLayout
@@ -161,6 +163,7 @@
             android:paddingTop="@dimen/top_padding"
             android:paddingLeft="@dimen/fab_margin"
             android:paddingRight="@dimen/fab_margin"
+            android:textStyle="bold"
             android:text="@string/cast"
             />
 
