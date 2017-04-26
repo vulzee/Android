@@ -31,9 +31,9 @@ public class CalendarDayDetailsFragmentDialog extends DialogFragment {
                     }
                 });
 
-        ((TextView)getView().findViewById(R.id.item_title)).setText("Some show");
-        ((TextView)getView().findViewById(R.id.item_description)).setText("Description");
-        ((TextView)getView().findViewById(R.id.show_time)).setText("16:30");
+        ((TextView)v.findViewById(R.id.item_title)).setText("Some show");
+        ((TextView)v.findViewById(R.id.item_description)).setText("Description");
+        ((TextView)v.findViewById(R.id.show_time)).setText("16:30");
         return builder.create();
     }
 }
