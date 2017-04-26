@@ -15,4 +15,10 @@
     <string name="show_genre">Genre</string>
     <string name="show_country">Country</string>
     <string name="search_button_text">Search</string>
+
+
+    <!-- Show details -->
+    <string name="description">DESCRIPTION</string>
+    <string name="cast">CAST</string>
+    <string name="nextepisode">NEXT EPISODE</string>
 </resources>
