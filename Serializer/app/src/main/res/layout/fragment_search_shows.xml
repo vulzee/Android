@@ -5,8 +5,76 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="TU BĘDZIE WYSZUKIWANIE SERIALI"
-        />
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/button_default_margin"
+        android:text="@string/search_for_show_label"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/button_default_margin"
+        android:layout_marginLeft="@dimen/button_default_margin"
+        android:layout_marginBottom="@dimen/button_default_margin"
+        android:gravity="center">
+        <TextView
+            android:layout_width="@dimen/search_label_width"
+            android:layout_height="wrap_content"
+            android:text="@string/show_name"
+            android:gravity="right"/>
+        <EditText
+            android:id="@+id/name_input"
+            android:layout_width="@dimen/search_text_box_width"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/button_default_margin"
+        android:layout_marginLeft="@dimen/button_default_margin"
+        android:layout_marginBottom="@dimen/button_default_margin"
+        android:gravity="center">
+        <TextView
+            android:layout_width="@dimen/search_label_width"
+            android:layout_height="wrap_content"
+            android:text="@string/show_country"
+            android:gravity="right"/>
+        <EditText
+            android:id="@+id/country_input"
+            android:layout_width="@dimen/search_text_box_width"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/editbox_background"/>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/button_default_margin"
+        android:layout_marginLeft="@dimen/button_default_margin"
+        android:layout_marginBottom="@dimen/button_default_margin"
+        android:gravity="center">
+        <TextView
+            android:layout_width="@dimen/search_label_width"
+            android:layout_height="wrap_content"
+            android:text="@string/show_genre"
+            android:gravity="right"/>
+        <Spinner android:id="@+id/genre_spinner"
+            android:layout_width="@dimen/search_text_box_width"
+            android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <Button
+            android:id="@+id/search_shows_button"
+            android:layout_width="@dimen/search_button_width"
+            android:layout_height="@dimen/search_button_height"
+            android:text="@string/search_button_text"/>
+    </LinearLayout>
 
 </LinearLayout>

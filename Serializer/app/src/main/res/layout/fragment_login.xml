@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="HERE WILL BE FB LOGIN BUTTON"/>
-
     <Button
         android:id="@+id/login_button"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="LOGIN"/>
+        android:background="#416BC1"
+        android:onClick="onClick"
+        android:text="@string/login_facebook_button"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:layout_margin="@dimen/button_default_margin"
+        android:layout_centerInParent="true"/>
 
-</LinearLayout>
+
+</RelativeLayout>
