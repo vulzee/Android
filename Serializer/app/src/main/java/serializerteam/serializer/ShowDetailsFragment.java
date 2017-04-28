@@ -27,8 +27,8 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-import serializerteam.serializer.castModel.CastListAdapter;
-import serializerteam.serializer.castModel.CastListItem;
+import serializerteam.serializer.model.cast.CastListAdapter;
+import serializerteam.serializer.model.cast.CastListItem;
 
 import static android.support.v7.app.ActionBar.DISPLAY_SHOW_CUSTOM;
 

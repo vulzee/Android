@@ -1,10 +1,9 @@
-package serializerteam.serializer.castModel;
+package serializerteam.serializer.model.cast;
 
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.squareup.picasso.Picasso;
@@ -12,9 +11,6 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import serializerteam.serializer.R;
-import serializerteam.serializer.ShowDetailsFragment;
-import serializerteam.serializer.model.ShowListItem;
-import serializerteam.serializer.model.ShowListViewHolder;
 
 
 public class CastListAdapter extends RecyclerView.Adapter<CastListViewHolder> {
