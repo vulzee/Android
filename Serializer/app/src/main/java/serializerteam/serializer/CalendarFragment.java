@@ -29,7 +29,7 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
 
         calendar = (MaterialCalendarView) view.findViewById(R.id.calendar_view);
-
+        calendar.setOnDateChangedListener(this);
         return view;
     }
 
