@@ -110,4 +110,11 @@ public class ShowDetailsFragment extends Fragment {
         image="";
         genre="Akcja";
     }
+
+    @Override
+    public void onDestroyView(){
+        ActionBar toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        toolbar.show();
+        super.onDestroyView();
+    }
 }
