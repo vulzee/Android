@@ -1,4 +1,4 @@
-package serializerteam.serializer.model;
+package serializerteam.serializer.model.showList;
 
 import android.graphics.Bitmap;
 import android.media.Image;
