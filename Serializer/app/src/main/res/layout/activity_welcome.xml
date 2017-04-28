@@ -5,16 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="serializerteam.serializer.WelcomeActivity">
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
     <serializerteam.serializer.RadarView
         android:id="@+id/radarView"
         android:layout_width="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Swipe left"/>
-
+        android:textColor="@android:color/white"
+        android:text="Swipe left to discover world of tv shows"
+        android:gravity="center_horizontal"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>
 </android.support.constraint.ConstraintLayout>
