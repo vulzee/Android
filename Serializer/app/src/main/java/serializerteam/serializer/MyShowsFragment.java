@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import serializerteam.serializer.model.showList.ShowListAdapter;
-import serializerteam.serializer.model.showList.ShowListItem;
+import serializerteam.serializer.model.ShowListAdapter;
+import serializerteam.serializer.model.ShowListItem;
 
 public class MyShowsFragment extends Fragment {
     private RecyclerView recyclerView;

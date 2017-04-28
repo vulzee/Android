@@ -16,8 +16,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import serializerteam.serializer.model.cast.CastListAdapter;
-import serializerteam.serializer.model.cast.CastListItem;
+import serializerteam.serializer.castModel.CastListAdapter;
+import serializerteam.serializer.castModel.CastListItem;
 
 public class ShowDetailsFragment extends Fragment {
 
