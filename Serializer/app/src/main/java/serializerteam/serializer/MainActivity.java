@@ -121,4 +121,11 @@ public class MainActivity extends AppCompatActivity
                 .setNegativeButton("No", null)
                 .show();
     }
+
+    public void searchShows(View view) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, new MyShowsFragment())
+                .commit();
+    }
 }
