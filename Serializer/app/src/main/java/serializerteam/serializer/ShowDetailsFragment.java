@@ -1,7 +1,9 @@
 package serializerteam.serializer;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -61,8 +63,11 @@ public class ShowDetailsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
         ActionBar toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         toolbar.setBackgroundDrawable(getResources().getDrawable(R.drawable.side_nav_bar, getActivity().getTheme()));
-        getActivity().setTheme(R.style.AppTheme_NoActionBar);
+      //  getActivity().setTheme(R.style.AppTheme_NoActionBar);
         initData();
+        //toolbar.setDisplayShowTitleEnabled(false);
+        //toolbar.setBackgroundDrawable(new ColorDrawable(Color.alpha(Color.BLACK)));
+        //toolbar.setDisplayHomeAsUpEnabled(true);
         toolbar.hide();
 
 
