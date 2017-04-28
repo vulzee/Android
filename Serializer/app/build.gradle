@@ -17,6 +17,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    aaptOptions{
+        cruncherEnabled = false
+    }
 }
 
 dependencies {
@@ -29,5 +32,6 @@ dependencies {
     compile 'com.android.support:support-v4:25.3.0'
     compile 'com.android.support:design:25.3.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.prolificinteractive:material-calendarview:1.4.3'
     testCompile 'junit:junit:4.12'
 }
