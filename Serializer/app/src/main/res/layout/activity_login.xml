@@ -7,8 +7,8 @@
     <fragment
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout="@layout/fragment_login"
         class="serializerteam.serializer.LoginFragment"
+        tools:layout="@layout/fragment_login"
         android:id="@+id/fragment_login"
         ></fragment>
 

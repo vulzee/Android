@@ -1,4 +1,4 @@
-package serializerteam.serializer.model.cast;
+package serializerteam.serializer.castModel;
 
 /**
  * Created by android on 2017-03-10.

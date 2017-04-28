@@ -1,4 +1,4 @@
-package serializerteam.serializer.model.showList;
+package serializerteam.serializer.model;
 
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +11,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import serializerteam.serializer.MyShowsFragment;
 import serializerteam.serializer.R;
 import serializerteam.serializer.ShowDetailsFragment;
 
