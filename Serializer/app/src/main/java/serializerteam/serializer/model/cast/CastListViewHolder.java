@@ -1,4 +1,4 @@
-package serializerteam.serializer.castModel;
+package serializerteam.serializer.model.cast;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

@@ -21,4 +21,5 @@
     <string name="description">DESCRIPTION</string>
     <string name="cast">CAST</string>
     <string name="nextepisode">NEXT EPISODE</string>
+    <string name="login_google_button">Login with google+</string>
 </resources>
