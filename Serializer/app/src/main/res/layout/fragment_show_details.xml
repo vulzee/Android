@@ -9,13 +9,12 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/list_item_height">
+        android:layout_height="72dp">
 
         <ImageView
             android:id="@+id/item_image"
-            android:layout_width="@dimen/list_item_image_size"
-            android:layout_height="@dimen/list_item_image_size"
-            android:layout_marginLeft="@dimen/fab_margin"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"/>
 
@@ -25,17 +24,15 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-
-            android:paddingLeft="@dimen/fab_margin"
-            android:paddingRight="@dimen/fab_margin"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:layout_toEndOf="@id/item_image">
 
             <TextView
                 android:id="@+id/item_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/fab_margin"
-                android:textSize="@dimen/list_item_header_font_size"
+                android:textSize="16sp"
                 android:textColor="#000000"
                 android:ellipsize="end"
                 android:maxLines="1"/>
@@ -44,8 +41,7 @@
                 android:id="@+id/item_genre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/fab_margin"
-                android:textSize="@dimen/list_item_secondary_text_font_size"
+                android:textSize="14sp"
                 android:layout_below="@id/item_title"
                 android:textColor="#000000"
                 android:ellipsize="end"
@@ -64,10 +60,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top"
-            android:paddingTop="@dimen/top_padding"
-            android:paddingLeft="@dimen/fab_margin"
-            android:paddingRight="@dimen/fab_margin"
-            android:textStyle="bold"
+            android:paddingTop="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:text="@string/description"
             />
 
@@ -75,10 +70,10 @@
             android:id="@+id/item_long_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/top_padding"
-            android:paddingLeft="@dimen/fab_margin"
-            android:paddingRight="@dimen/fab_margin"
-            android:textSize="@dimen/list_item_secondary_text_font_size"
+            android:paddingTop="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textSize="14sp"
             android:ellipsize="end"
            />
 
@@ -94,10 +89,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top"
-            android:paddingTop="@dimen/top_padding"
-            android:paddingLeft="@dimen/fab_margin"
-            android:paddingRight="@dimen/fab_margin"
-            android:textStyle="bold"
+            android:paddingTop="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:text="@string/nextepisode"
             />
         <LinearLayout
@@ -114,10 +108,10 @@
                     android:id="@+id/next_episode"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingTop="@dimen/top_padding"
-                    android:paddingLeft="@dimen/fab_margin"
-                    android:paddingRight="@dimen/fab_margin"
-                    android:textSize="@dimen/list_item_secondary_text_font_size"
+                    android:paddingTop="16dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:textSize="14sp"
                     android:ellipsize="end"
                     android:layout_weight="1"
                     />
@@ -125,9 +119,9 @@
                     android:id="@+id/next_episode_time"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingLeft="@dimen/fab_margin"
-                    android:paddingRight="@dimen/fab_margin"
-                    android:textSize="@dimen/list_item_secondary_text_font_size"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:textSize="14sp"
                     android:ellipsize="end"
                     android:layout_weight="1"
                     />
@@ -138,10 +132,10 @@
                 android:id="@+id/next_episode_description"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingTop="@dimen/top_padding"
-                android:paddingLeft="@dimen/fab_margin"
-                android:paddingRight="@dimen/fab_margin"
-                android:textSize="@dimen/list_item_secondary_text_font_size"
+                android:paddingTop="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textSize="14sp"
                 android:ellipsize="end"
                 android:layout_weight="1"
                 />
@@ -160,10 +154,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top"
-            android:paddingTop="@dimen/top_padding"
-            android:paddingLeft="@dimen/fab_margin"
-            android:paddingRight="@dimen/fab_margin"
-            android:textStyle="bold"
+            android:paddingTop="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:text="@string/cast"
             />
 
@@ -172,13 +165,16 @@
                 android:id="@+id/show_cast_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingTop="@dimen/top_padding"
+                android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                android:paddingLeft="@dimen/fab_margin"
-                android:paddingRight="@dimen/fab_margin">
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
             </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
+
+
+
 
 </LinearLayout>
     </ScrollView>
