@@ -1,23 +1,36 @@
 package serializerteam.serializer;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.EpisodeDto;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
+import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import serializerteam.serializer.castModel.CastListAdapter;
 import serializerteam.serializer.castModel.CastListItem;
+
+import static android.support.v7.app.ActionBar.DISPLAY_SHOW_CUSTOM;
 
 public class ShowDetailsFragment extends Fragment {
 
@@ -29,10 +42,11 @@ public class ShowDetailsFragment extends Fragment {
     private String summary;
     private String image;
     private String genre;
+    private View view;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_show_details, container, false);
+        view = inflater.inflate(R.layout.fragment_show_details, container, false);
 
         initData2();
         ((TextView)view.findViewById(R.id.item_title)).setText(seriesName);
@@ -41,13 +55,36 @@ public class ShowDetailsFragment extends Fragment {
         ((TextView)view.findViewById(R.id.next_episode)).setText("Episode "+episode.getSeason()+"x"+episode.getNumber());
         ((TextView)view.findViewById(R.id.next_episode_description)).setText(episode.getSummary());
         ((TextView)view.findViewById(R.id.next_episode_time)).setText(episode.getAirdate()+", "+episode.getAirtime());
-        Picasso.with(getContext()).load(R.mipmap.ic_launcher).into((ImageView)view.findViewById(R.id.item_image));
+        //Picasso.with(getContext()).load(R.mipmap.ic_launcher).into((ImageView)view.findViewById(R.id.item_image));
+
         recyclerView = (RecyclerView) view.findViewById(R.id.show_cast_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
-
+        ActionBar toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        toolbar.setBackgroundDrawable(getResources().getDrawable(R.drawable.side_nav_bar, getActivity().getTheme()));
+        getActivity().setTheme(R.style.AppTheme_NoActionBar);
         initData();
+        toolbar.hide();
 
-        return view;
+
+    Target showPic = new Target() {
+        @Override
+        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+            ((RelativeLayout) view.findViewById(R.id.show_pic)).setBackground(new BitmapDrawable(getResources(), bitmap));
+        }
+
+        @Override
+        public void onBitmapFailed(Drawable errorDrawable) {
+            ((RelativeLayout) view.findViewById(R.id.show_pic)).setBackground(getResources().getDrawable(R.drawable.side_nav_bar, getActivity().getTheme()));
+        }
+
+        @Override
+        public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+        }
+    };
+     Picasso.with(getContext()).load(R.mipmap.ic_launcher).into(showPic);
+
+    return view;
     }
 
     private void initData() {
