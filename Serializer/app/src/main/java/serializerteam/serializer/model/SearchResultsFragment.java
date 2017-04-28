@@ -1,4 +1,4 @@
-package serializerteam.serializer;
+package serializerteam.serializer.model;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,10 +11,9 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import serializerteam.serializer.model.showList.ShowListAdapter;
-import serializerteam.serializer.model.showList.ShowListItem;
+import serializerteam.serializer.R;
 
-public class MyShowsFragment extends Fragment {
+public class SearchResultsFragment extends Fragment {
     private RecyclerView recyclerView;
     private ArrayList<ShowListItem> list;
     private ShowListAdapter showListAdapter;
@@ -22,9 +21,9 @@ public class MyShowsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_my_shows, container, false);
+        View view = inflater.inflate(R.layout.fragment_search_results, container, false);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.my_shows_list);
+        recyclerView = (RecyclerView) view.findViewById(R.id.search_results);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         initData();
@@ -34,7 +33,7 @@ public class MyShowsFragment extends Fragment {
 
     private void initData() {
         list = new ArrayList<>();
-        list.add(0, new ShowListItem(0, "Super movie", "Super duper", ""));
+        list.add(0, new ShowListItem(0, "some show", "dude", ""));
 
         showListAdapter = new ShowListAdapter(list, getActivity(), getFragmentManager());
         recyclerView.setAdapter(showListAdapter);
