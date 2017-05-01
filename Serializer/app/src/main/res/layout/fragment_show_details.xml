@@ -85,7 +85,9 @@
             android:textStyle="bold"
             android:text="@string/description"
             />
-
+    <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <TextView
             android:id="@+id/item_long_description"
             android:layout_width="match_parent"
@@ -96,6 +98,7 @@
             android:textSize="@dimen/list_item_secondary_text_font_size"
             android:ellipsize="end"
            />
+        </android.support.v4.widget.NestedScrollView>
 </LinearLayout>
     </android.support.v7.widget.CardView>
 
@@ -155,7 +158,10 @@
                     />
             </LinearLayout>
 
-
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
             <TextView
                 android:id="@+id/next_episode_description"
                 android:layout_width="match_parent"
@@ -165,8 +171,9 @@
                 android:paddingRight="@dimen/fab_margin"
                 android:textSize="@dimen/list_item_secondary_text_font_size"
                 android:ellipsize="end"
-                android:layout_weight="1"
+
                 />
+            </android.support.v4.widget.NestedScrollView>
         </LinearLayout>
 </LinearLayout>
 

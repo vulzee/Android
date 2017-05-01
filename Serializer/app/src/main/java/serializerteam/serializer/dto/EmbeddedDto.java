@@ -12,13 +12,13 @@ public class EmbeddedDto {
 
     @SerializedName("cast")
     @Expose
-    private CastDto[] cast = null;
+    private List<CastDto> cast = null;
 
-    public CastDto[] getCast() {
+    public List<CastDto> getCast() {
         return cast;
     }
 
-    public void setCast(CastDto[] cast) {
+    public void setCast(List<CastDto> cast) {
         this.cast = cast;
     }
 

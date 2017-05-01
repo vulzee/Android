@@ -11,14 +11,15 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import serializerteam.serializer.R;
+import serializerteam.serializer.dto.CastDto;
 
 
 public class CastListAdapter extends RecyclerView.Adapter<CastListViewHolder> {
-    private List<CastListItem> list;
+    private List<CastDto> list;
     private Context mContext;
     private FragmentManager mFragmentManager;
 
-    public CastListAdapter(List<CastListItem> list, Context mContext, FragmentManager mFragmentManager) {
+    public CastListAdapter(List<CastDto> list, Context mContext, FragmentManager mFragmentManager) {
         this.list = list;
         this.mContext = mContext;
         this.mFragmentManager = mFragmentManager;
@@ -31,10 +32,10 @@ public class CastListAdapter extends RecyclerView.Adapter<CastListViewHolder> {
 
     @Override
     public void onBindViewHolder(final CastListViewHolder holder, final int position) {
-        final CastListItem castListItem = list.get(position);
+        final CastDto castListItem = list.get(position);
 
-        holder.mTitleView.setText(castListItem.getTitle());
-        holder.mDescriptionView.setText(castListItem.getDescription());
+        holder.mTitleView.setText(castListItem.getCharacter().getName());
+        holder.mDescriptionView.setText(castListItem.getPerson().getName());
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -52,10 +53,9 @@ public class CastListAdapter extends RecyclerView.Adapter<CastListViewHolder> {
         return (list != null) ? list.size() : 0;
     }
 
-    private void setShoppingListItemImage(CastListViewHolder holder, CastListItem castListItem) {
-        String imageUrl = castListItem.getImageUrl();
-        if(!imageUrl.isEmpty()) {
-            Picasso.with(mContext).load(imageUrl).into(holder.mImageView);
+    private void setShoppingListItemImage(CastListViewHolder holder, CastDto castListItem) {
+        if(castListItem.getPerson().getImage()!=null && castListItem.getPerson().getImage().size()>0) {
+            Picasso.with(mContext).load(castListItem.getPerson().getImage().values().iterator().next()).into(holder.mImageView);
         }
         else {
             Picasso.with(mContext).load(R.mipmap.ic_launcher).into(holder.mImageView);
