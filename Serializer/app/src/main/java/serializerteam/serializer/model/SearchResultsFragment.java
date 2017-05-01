@@ -12,12 +12,13 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import serializerteam.serializer.R;
+import serializerteam.serializer.dto.ShowDto;
 import serializerteam.serializer.model.showList.ShowListAdapter;
 import serializerteam.serializer.model.showList.ShowListItem;
 
 public class SearchResultsFragment extends Fragment {
     private RecyclerView recyclerView;
-    private ArrayList<ShowListItem> list;
+    private ArrayList<ShowDto> list;
     private ShowListAdapter showListAdapter;
 
     @Nullable
@@ -35,7 +36,7 @@ public class SearchResultsFragment extends Fragment {
 
     private void initData() {
         list = new ArrayList<>();
-        list.add(0, new ShowListItem(0, "some show", "dude", ""));
+        //list.add(0, new ShowDto());
 
         showListAdapter = new ShowListAdapter(list, getActivity(), getFragmentManager());
         recyclerView.setAdapter(showListAdapter);
