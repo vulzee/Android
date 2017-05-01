@@ -2,7 +2,10 @@ package serializerteam.serializer.dto;
 
 /**
  * Created by xxx on 2017-05-01.
- */import java.util.List;
+ */
+
+import java.util.HashMap;
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -53,18 +56,18 @@ public class ShowDto {
 //    @SerializedName("externals")
 //    @Expose
 //    private Externals externals;
-//    @SerializedName("image")
-//    @Expose
-//    private Image image;
+    @SerializedName("image")
+    @Expose
+    private HashMap<String,String> image;
     @SerializedName("summary")
     @Expose
     private String summary;
     @SerializedName("updated")
     @Expose
     private int updated;
-  //  @SerializedName("_links")
-  //  @Expose
-  //  private Links links;
+    @SerializedName("_links")
+    @Expose
+    private HashMap<String,LinkDto> links;
   @SerializedName("_embedded")
   @Expose
   private EmbeddedDto embedded;
@@ -189,13 +192,13 @@ public class ShowDto {
 //        this.externals = externals;
 //    }
 
-//    public Image getImage() {
-//        return image;
-//    }
-//
-//    public void setImage(Image image) {
-//        this.image = image;
-//    }
+    public  HashMap<String,String> getImage() {
+        return image;
+    }
+
+    public void setImage( HashMap<String,String> image) {
+        this.image = image;
+    }
 
     public String getSummary() {
         return summary;
@@ -213,13 +216,13 @@ public class ShowDto {
         this.updated = updated;
     }
 
-//    public Links getLinks() {
-//        return links;
-//    }
-//
-//    public void setLinks(Links links) {
-//        this.links = links;
-//    }
+    public HashMap<String,LinkDto> getLinks() {
+        return links;
+    }
+
+    public void setLinks(HashMap<String,LinkDto> links) {
+        this.links = links;
+    }
 
     public EmbeddedDto getEmbedded() {
         return embedded;

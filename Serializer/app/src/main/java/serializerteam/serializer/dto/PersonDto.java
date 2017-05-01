@@ -26,9 +26,9 @@ public class PersonDto {
     @SerializedName("image")
     @Expose
     private HashMap<String,String> image;
-//    @SerializedName("_links")
-//    @Expose
-//    private Links_ links;
+    @SerializedName("_links")
+    @Expose
+    private HashMap<String,LinkDto> links;
 
     public int getId() {
         return id;
@@ -61,13 +61,13 @@ public class PersonDto {
     public void setImage(HashMap<String, String> image) {
         this.image = image;
     }
-//
-//    public Links_ getLinks() {
-//        return links;
-//    }
-//
-//    public void setLinks(Links_ links) {
-//        this.links = links;
-//    }
+
+    public HashMap<String,LinkDto> getLinks() {
+        return links;
+    }
+
+    public void setLinks(HashMap<String,LinkDto> links) {
+        this.links = links;
+    }
 
 }

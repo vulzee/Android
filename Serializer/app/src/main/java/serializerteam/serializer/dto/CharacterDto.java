@@ -7,6 +7,8 @@ package serializerteam.serializer.dto;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.HashMap;
+
 public class CharacterDto {
 
     @SerializedName("id")
@@ -18,12 +20,12 @@ public class CharacterDto {
     @SerializedName("name")
     @Expose
     private String name;
-//    @SerializedName("image")
-//    @Expose
-//    private Object image;
-//    @SerializedName("_links")
-//    @Expose
-//    private Links__ links;
+    @SerializedName("image")
+    @Expose
+    private HashMap<String,String> image;
+    @SerializedName("_links")
+    @Expose
+    private HashMap<String,LinkDto> links;
 
     public int getId() {
         return id;
@@ -49,20 +51,20 @@ public class CharacterDto {
         this.name = name;
     }
 
-//    public Object getImage() {
-//        return image;
-//    }
-//
-//    public void setImage(Object image) {
-//        this.image = image;
-//    }
+    public  HashMap<String,String> getImage() {
+        return image;
+    }
 
-//    public Links__ getLinks() {
-//        return links;
-//    }
-//
-//    public void setLinks(Links__ links) {
-//        this.links = links;
-//    }
+    public void setImage( HashMap<String,String> image) {
+        this.image = image;
+    }
+
+    public HashMap<String,LinkDto> getLinks() {
+        return links;
+    }
+
+    public void setLinks(HashMap<String,LinkDto> links) {
+        this.links = links;
+    }
 
 }

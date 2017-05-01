@@ -23,6 +23,7 @@ import retrofit2.Retrofit;
 import serializerteam.serializer.api.ApiSettings;
 import serializerteam.serializer.api.ShowsApi;
 import serializerteam.serializer.api.UrlApi;
+import serializerteam.serializer.dto.EpisodeDto;
 import serializerteam.serializer.dto.PersonDto;
 import serializerteam.serializer.dto.SearchedShow;
 import serializerteam.serializer.dto.ShowDto;
@@ -51,11 +52,12 @@ public class MyShowsFragment extends Fragment {
         list = new ArrayList<>();
         list.add(0, new ShowListItem(0, "Super movie", "Super duper", ""));
 
-//        ApiSettings.urlApi.getResponse("http://api.tvmaze.com/people/3").enqueue(new Callback<ResponseBody>() {
+//        ApiSettings.urlApi.getResponse("http://api.tvmaze.com/episodes/999541").enqueue(new Callback<ResponseBody>() {
 //            @Override
 //            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 //                if(response.body()!=null) {
-//                    PersonDto pa = new Gson().fromJson(response.body().charStream(), PersonDto.class);
+//                    EpisodeDto pa = new Gson().fromJson(response.body().charStream(), EpisodeDto.class);
+//
 //                }
 //            }
 //

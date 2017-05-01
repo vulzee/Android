@@ -17,4 +17,5 @@ public final class ApiSettings {
     static public ShowsApi showsApiService = retrofit.create(ShowsApi.class);
     static public PeopleApi peopleApi = retrofit.create(PeopleApi.class);
     static public UrlApi urlApi = retrofit.create(UrlApi.class);
+    static public EpisodeApi episodeApi = retrofit.create(EpisodeApi.class);
 }
