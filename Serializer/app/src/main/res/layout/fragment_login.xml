@@ -25,17 +25,25 @@
             android:textStyle="bold"
             android:layout_margin="@dimen/button_default_margin"
             android:layout_centerInParent="true"/>
-        <Button
-            android:id="@+id/google_login_button"
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#fafafa"
-            android:onClick="onClick"
-            android:text="@string/login_google_button"
-            android:textColor="#263238"
-            android:textStyle="bold"
+            android:layout_centerInParent="true"
             android:layout_margin="@dimen/button_default_margin"
-            android:layout_centerInParent="true"/>
+            />
+        <!--<Button-->
+            <!--android:id="@+id/google_login_button"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="#fafafa"-->
+            <!--android:onClick="onClick"-->
+            <!--android:text="@string/login_google_button"-->
+            <!--android:textColor="#263238"-->
+            <!--android:textStyle="bold"-->
+            <!--android:layout_margin="@dimen/button_default_margin"-->
+            <!--android:layout_centerInParent="true"/>-->
 
     </LinearLayout>
 
