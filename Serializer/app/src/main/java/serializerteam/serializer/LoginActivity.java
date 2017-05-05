@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             this.finish();
         } else {
             //TODO
-            Toast.makeText(this,"No internet connection.", Toast.LENGTH_LONG);
+
             // Signed out, show unauthenticated UI.
             //updateUI(false);
         }
@@ -81,5 +81,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         //TODO
+        Toast.makeText(this,"No internet connection.", Toast.LENGTH_LONG);
     }
 }
