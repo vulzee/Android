@@ -34,8 +34,11 @@ public class MyShowsFragment extends Fragment {
     private RecyclerView recyclerView;
     private ArrayList<ShowDto> list;
     private ShowListAdapter showListAdapter;
-    private int[] myFavouriteShows = {1456,224,1323,412};
+    private int[] showsId = {1456,224,1323,412};
     private volatile int completedTasks =0;
+    // if search set to true
+    private boolean searchedShows = false;
+  //  private int[] searchedShowsId;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -44,12 +47,25 @@ public class MyShowsFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.my_shows_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        initData();
+        //get shows ids from DB or anywhere else
+        //showsID=....;
+        if(searchedShows){
+            setShowListAdapter();
+        }else
+            initData(showsId);
 
         return view;
     }
 
-    private void initData() {
+    public void setSearchedShows(ArrayList<ShowDto> searchedShows){
+        if(searchedShows==null) return;
+            this.searchedShows=true;
+        this.list = searchedShows;
+
+    }
+
+
+    private void initData(final int[] myFavouriteShows) {
         list = new ArrayList<>();
         Call<ShowDto>[] tasks = new Call[myFavouriteShows.length];
        // list.add(0, new ShowListItem(0, "Super movie", "Super duper", ""));

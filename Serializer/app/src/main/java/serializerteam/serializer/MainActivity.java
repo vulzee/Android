@@ -8,6 +8,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,6 +19,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
@@ -24,6 +28,17 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+
+import java.util.ArrayList;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import serializerteam.serializer.api.ApiSettings;
+import serializerteam.serializer.dto.SearchedShow;
+import serializerteam.serializer.dto.ShowDto;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -143,10 +158,34 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void searchShows(View view) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.content_frame, new MyShowsFragment())
-                .commit();
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        final MyShowsFragment fragment = new MyShowsFragment();
+        //search logic
+
+        //null reference przy wywolaniu .getText()
+        String name=((EditText)view.findViewById(R.id.name_input)).getText().toString();
+        //.toString();
+        ApiSettings.showsApiService.searchShows(name).enqueue(new Callback<SearchedShow[]>() {
+            @Override
+            public void onResponse(Call<SearchedShow[]> call, Response<SearchedShow[]> response) {
+                ArrayList<ShowDto> searchedShows=new ArrayList<ShowDto>(response.body().length);
+                for(SearchedShow i : response.body()){
+                    searchedShows.add(i.getShow());
+                }
+                fragment.setSearchedShows(searchedShows);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_frame,fragment)
+                        .commit();
+            }
+
+            @Override
+            public void onFailure(Call<SearchedShow[]> call, Throwable t) {
+                Log.e("ERR",t.toString());
+                Toast.makeText(MainActivity.this, "Something gone bad.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
     }
 
     private void googleLogOut() {

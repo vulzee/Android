@@ -7,4 +7,20 @@ package serializerteam.serializer.dto;
 public class SearchedShow {
     double score;
     ShowDto show;
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    public ShowDto getShow() {
+        return show;
+    }
+
+    public void setShow(ShowDto show) {
+        this.show = show;
+    }
 }
