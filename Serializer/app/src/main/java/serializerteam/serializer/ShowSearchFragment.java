@@ -32,7 +32,7 @@ public class ShowSearchFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_search_shows, container, false);
+        final View view = inflater.inflate(R.layout.fragment_search_shows, container, false);
         spinnerCategories=new String[5];
         spinnerCategories[0]="genre 1";
         spinnerCategories[1]="genre 2";
@@ -43,37 +43,41 @@ public class ShowSearchFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, spinnerCategories);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         genreSpinner.setAdapter(adapter);
-//        ((Button)view.findViewById(R.id.search_shows_button)).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                final MyShowsFragment fragment = new MyShowsFragment();
-//                //search logic
-//                //View v = view.findViewById(R.id.name_input);
-//                //view.findViewById(R.id.)
-//                Editable name=((EditText)v.findViewById(R.id.name_input)).getText();
-//                //.toString();
-//                ApiSettings.showsApiService.searchShows("").enqueue(new Callback<SearchedShow[]>() {
-//                    @Override
-//                    public void onResponse(Call<SearchedShow[]> call, Response<SearchedShow[]> response) {
-//                        ArrayList<ShowDto> searchedShows=new ArrayList<ShowDto>(response.body().length);
-//                        for(SearchedShow i : response.body()){
-//                            searchedShows.add(i.getShow());
-//                        }
-//                        fragment.setSearchedShows(searchedShows);
-//                        fragmentManager.beginTransaction()
-//                                .replace(R.id.content_frame,fragment)
-//                                .commit();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<SearchedShow[]> call, Throwable t) {
-//                        Log.e("ERR",t.toString());
-//                        Toast.makeText(getActivity(), "Something gone bad.", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//            }
-//        });
+
+        Button searchShowsButton = (Button)view.findViewById(R.id.search_shows_button);
+        searchShowsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchShows(view);
+            }
+        });
         return view;
+    }
+
+    private void searchShows(View view) {
+        final FragmentManager fragmentManager = getFragmentManager();
+        final MyShowsFragment fragment = new MyShowsFragment();
+
+        String name = ((EditText)view.findViewById(R.id.name_input)).getText().toString();
+        ApiSettings.showsApiService.searchShows(name).enqueue(new Callback<SearchedShow[]>() {
+            @Override
+            public void onResponse(Call<SearchedShow[]> call, Response<SearchedShow[]> response) {
+                ArrayList<ShowDto> searchedShows= new ArrayList<>(response.body().length);
+                for(SearchedShow i : response.body()){
+                    searchedShows.add(i.getShow());
+                }
+                fragment.setSearchedShows(searchedShows);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_frame,fragment)
+                        .commit();
+            }
+
+            @Override
+            public void onFailure(Call<SearchedShow[]> call, Throwable t) {
+                Log.e("ERR",t.toString());
+                Toast.makeText(getActivity(), "Something gone bad.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }

@@ -157,37 +157,6 @@ public class MainActivity extends AppCompatActivity
                 .show();
     }
 
-    public void searchShows(View view) {
-        final FragmentManager fragmentManager = getSupportFragmentManager();
-        final MyShowsFragment fragment = new MyShowsFragment();
-        //search logic
-
-        //null reference przy wywolaniu .getText()
-        String name=((EditText)view.findViewById(R.id.name_input)).getText().toString();
-        //.toString();
-        ApiSettings.showsApiService.searchShows(name).enqueue(new Callback<SearchedShow[]>() {
-            @Override
-            public void onResponse(Call<SearchedShow[]> call, Response<SearchedShow[]> response) {
-                ArrayList<ShowDto> searchedShows=new ArrayList<ShowDto>(response.body().length);
-                for(SearchedShow i : response.body()){
-                    searchedShows.add(i.getShow());
-                }
-                fragment.setSearchedShows(searchedShows);
-                fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame,fragment)
-                        .commit();
-            }
-
-            @Override
-            public void onFailure(Call<SearchedShow[]> call, Throwable t) {
-                Log.e("ERR",t.toString());
-                Toast.makeText(MainActivity.this, "Something gone bad.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-    }
-
     private void googleLogOut() {
         Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
                 new ResultCallback<Status>() {
