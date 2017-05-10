@@ -21,4 +21,9 @@
     <dimen name="search_button_height">48dp</dimen>
     <dimen name="search_button_width">196dp</dimen>
     <dimen name="add_show_button_size">48dp</dimen>
+
+    <dimen name="spacing_xsmall">2dp</dimen>
+    <dimen name="spacing_medium">8dp</dimen>
+    <dimen name="spacing_large">16dp</dimen>
+    <dimen name="spacing_xlarge">32dp</dimen>
 </resources>

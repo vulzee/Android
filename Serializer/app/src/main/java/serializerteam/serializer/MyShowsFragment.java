@@ -3,6 +3,7 @@ package serializerteam.serializer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -30,7 +31,7 @@ import serializerteam.serializer.dto.ShowDto;
 import serializerteam.serializer.model.showList.ShowListAdapter;
 import serializerteam.serializer.model.showList.ShowListItem;
 
-public class MyShowsFragment extends Fragment {
+public class MyShowsFragment extends Fragment implements ShowListAdapter.OnItemClickListener {
     private RecyclerView recyclerView;
     private ArrayList<ShowDto> list;
     private ShowListAdapter showListAdapter;
@@ -135,7 +136,13 @@ public class MyShowsFragment extends Fragment {
 
     private void setShowListAdapter (){
        // if(completedTasks!=myFavouriteShows.length) return;
-        showListAdapter = new ShowListAdapter(list, getActivity(), getFragmentManager());
+        showListAdapter = new ShowListAdapter(list, getActivity());
+        showListAdapter.setOnItemClickListener(this);
         recyclerView.setAdapter(showListAdapter);
+    }
+
+    @Override
+    public void onItemClick(View view, ShowDto showListItem) {
+        ShowDetailsActivity.navigate((AppCompatActivity) getActivity(), view.findViewById(R.id.item_image), showListItem);
     }
 }

@@ -38,7 +38,7 @@ public class SearchResultsFragment extends Fragment {
         list = new ArrayList<>();
         //list.add(0, new ShowDto());
 
-        showListAdapter = new ShowListAdapter(list, getActivity(), getFragmentManager());
+        showListAdapter = new ShowListAdapter(list, getActivity());
         recyclerView.setAdapter(showListAdapter);
     }
 }
