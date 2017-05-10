@@ -18,9 +18,9 @@
 
 
     <!-- Show details -->
-    <string name="description">DESCRIPTION</string>
-    <string name="cast">CAST</string>
-    <string name="nextepisode">NEXT EPISODE</string>
+    <string name="description">Description</string>
+    <string name="cast">Cast</string>
+    <string name="next_episode">Next episode</string>
     <string name="login_google_button">Login with google+</string>
     <string name="my_shows">My shows</string>
     <string name="search_shows">Search shows</string>
@@ -33,5 +33,8 @@
     <string name="fb_login_protocol_scheme">fb1319105388208363</string>
     <string name="login_failed">Login failed. Please try again.</string>
     <string name="connection_failed">Login failed. Check your internet connection and try again.</string>
+    <string name="title_activity_show_details">ShowDetails</string>
+    <string name="transition_name">extra_image</string>
+    <string name="share_using">Share using</string>
 
 </resources>
