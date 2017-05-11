@@ -90,7 +90,8 @@ public class ShowDetailsActivity extends AppCompatActivity {
                 if(response.body()!=null) {
                     showDto = response.body();
                     collapsingToolbarLayout.setTitle(showDto.getName() + " " + showDto.getGenres().toString());
-                    ((TextView)findViewById(R.id.item_long_description)).setText(Jsoup.parse(showDto.getSummary()).text());
+                    String newSummary=Jsoup.parse(showDto.getSummary()).text();
+                    ((TextView)findViewById(R.id.item_long_description)).setText(newSummary);
                     if(showDto.getImage()!=null && showDto.getImage().size()>0)
                         Picasso.with(ShowDetailsActivity.this).load(showDto.getImage().values().iterator().next()).into((ImageView)findViewById(R.id.toolbar_image));
                     else
@@ -146,7 +147,8 @@ public class ShowDetailsActivity extends AppCompatActivity {
                 if(response.body()!=null) {
                     episode = new Gson().fromJson(response.body().charStream(), EpisodeDto.class);
                     ((TextView)findViewById(R.id.next_episode)).setText("Episode "+episode.getSeason()+"x"+episode.getNumber());
-                    ((TextView)findViewById(R.id.next_episode_description)).setText(Jsoup.parse(episode.getSummary()).text());
+                    if(episode.getSummary()!=null)
+                        ((TextView)findViewById(R.id.next_episode_description)).setText(Jsoup.parse(episode.getSummary()).text());
                     ((TextView)findViewById(R.id.next_episode_time)).setText(episode.getAirdate()+", "+episode.getAirtime());
                 }
             }
