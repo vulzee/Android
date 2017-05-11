@@ -90,8 +90,8 @@ public class ShowDetailsActivity extends AppCompatActivity {
                 if(response.body()!=null) {
                     showDto = response.body();
                     collapsingToolbarLayout.setTitle(showDto.getName() + " " + showDto.getGenres().toString());
-                    String newSummary=Jsoup.parse(showDto.getSummary()).text();
-                    ((TextView)findViewById(R.id.item_long_description)).setText(newSummary);
+                    if(showDto.getSummary()!=null)
+                        ((TextView)findViewById(R.id.item_long_description)).setText(Jsoup.parse(showDto.getSummary()).text());
                     if(showDto.getImage()!=null && showDto.getImage().size()>0)
                         Picasso.with(ShowDetailsActivity.this).load(showDto.getImage().values().iterator().next()).into((ImageView)findViewById(R.id.toolbar_image));
                     else
