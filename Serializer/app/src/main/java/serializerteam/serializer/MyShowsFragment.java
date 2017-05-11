@@ -39,11 +39,13 @@ public class MyShowsFragment extends Fragment implements ShowListAdapter.OnItemC
     private volatile int completedTasks =0;
     // if search set to true
     private boolean searchedShows = false;
+
+    private View view;
   //  private int[] searchedShowsId;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_my_shows, container, false);
+        view = inflater.inflate(R.layout.fragment_my_shows, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.my_shows_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -135,6 +137,10 @@ public class MyShowsFragment extends Fragment implements ShowListAdapter.OnItemC
     }
 
     private void setShowListAdapter (){
+        if(list.size()==0)
+            view.findViewById(R.id.no_shows_found).setVisibility(View.VISIBLE);
+        else
+            view.findViewById(R.id.no_shows_found).setVisibility(View.GONE);
        // if(completedTasks!=myFavouriteShows.length) return;
         showListAdapter = new ShowListAdapter(list, getActivity());
         showListAdapter.setOnItemClickListener(this);
