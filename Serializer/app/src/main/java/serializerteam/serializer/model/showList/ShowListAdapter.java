@@ -1,7 +1,6 @@
 package serializerteam.serializer.model.showList;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,19 +12,17 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import serializerteam.serializer.R;
-import serializerteam.serializer.ShowDetailsFragment;
 import serializerteam.serializer.dto.ShowDto;
 
 
 public class ShowListAdapter extends RecyclerView.Adapter<ShowListViewHolder> {
     private List<ShowDto> list;
     private Context mContext;
-    private FragmentManager mFragmentManager;
+    private OnItemClickListener onItemClickListener;
 
-    public ShowListAdapter(List<ShowDto> list, Context mContext, FragmentManager mFragmentManager) {
+    public ShowListAdapter(List<ShowDto> list, Context mContext) {
         this.list = list;
         this.mContext = mContext;
-        this.mFragmentManager = mFragmentManager;
     }
 
     @Override
@@ -42,13 +39,7 @@ public class ShowListAdapter extends RecyclerView.Adapter<ShowListViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShowDetailsFragment a = new ShowDetailsFragment();
-                Bundle args=new Bundle();
-                args.putInt("id",showListItem.getId());
-                a.setArguments(args);
-                mFragmentManager.beginTransaction().addToBackStack("details")
-                        .replace(R.id.content_frame,a)
-                        .commit();
+                onItemClickListener.onItemClick(v, showListItem);
             }
         });
 
@@ -60,7 +51,12 @@ public class ShowListAdapter extends RecyclerView.Adapter<ShowListViewHolder> {
         return (list != null) ? list.size() : 0;
     }
 
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
     private void setShoppingListItemImage(ShowListViewHolder holder, ShowDto showListItem) {
+        if(showListItem.getImage()==null)return;
         String imageUrl = showListItem.getImage().values().iterator().next();
         if(!imageUrl.isEmpty()) {
             Picasso.with(mContext).load(imageUrl).into(holder.mImageView);
@@ -68,5 +64,9 @@ public class ShowListAdapter extends RecyclerView.Adapter<ShowListViewHolder> {
         else {
             Picasso.with(mContext).load(R.mipmap.ic_launcher).into(holder.mImageView);
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, ShowDto showListItem);
     }
 }

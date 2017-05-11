@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "49281159795",
+    "project_id": "firebase-serializer"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:49281159795:android:e4097eeba9c2b21a",
+        "android_client_info": {
+          "package_name": "serializerteam.serializer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "49281159795-5nudps01hrs58h5ighdtdvuug4inp1i3.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "49281159795-foslila79k2efi4cusv6jqv43sr8iovb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "serializerteam.serializer",
+            "certificate_hash": "cfb9c44195c7b524df94a157c8b53ccf19ae9308"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCrSghQEz7PXzJcGhHF4hlwo6zNelTZiU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

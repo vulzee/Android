@@ -74,8 +74,7 @@
             android:id="@+id/search_shows_button"
             android:layout_width="@dimen/search_button_width"
             android:layout_height="@dimen/search_button_height"
-            android:text="@string/search_button_text"
-            android:onClick="searchShows"/>
+            android:text="@string/search_button_text"></Button>
     </LinearLayout>
 
 </LinearLayout>

@@ -3,6 +3,7 @@ package serializerteam.serializer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -30,26 +31,44 @@ import serializerteam.serializer.dto.ShowDto;
 import serializerteam.serializer.model.showList.ShowListAdapter;
 import serializerteam.serializer.model.showList.ShowListItem;
 
-public class MyShowsFragment extends Fragment {
+public class MyShowsFragment extends Fragment implements ShowListAdapter.OnItemClickListener {
     private RecyclerView recyclerView;
     private ArrayList<ShowDto> list;
     private ShowListAdapter showListAdapter;
-    private int[] myFavouriteShows = {1456,224,1323,412};
+    private int[] showsId = {1456,224,1323,412};
     private volatile int completedTasks =0;
+    // if search set to true
+    private boolean searchedShows = false;
+
+    private View view;
+  //  private int[] searchedShowsId;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_my_shows, container, false);
+        view = inflater.inflate(R.layout.fragment_my_shows, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.my_shows_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        initData();
+        //get shows ids from DB or anywhere else
+        //showsID=....;
+        if(searchedShows){
+            setShowListAdapter();
+        }else
+            initData(showsId);
 
         return view;
     }
 
-    private void initData() {
+    public void setSearchedShows(ArrayList<ShowDto> searchedShows){
+        if(searchedShows==null) return;
+            this.searchedShows=true;
+        this.list = searchedShows;
+
+    }
+
+
+    private void initData(final int[] myFavouriteShows) {
         list = new ArrayList<>();
         Call<ShowDto>[] tasks = new Call[myFavouriteShows.length];
        // list.add(0, new ShowListItem(0, "Super movie", "Super duper", ""));
@@ -118,8 +137,18 @@ public class MyShowsFragment extends Fragment {
     }
 
     private void setShowListAdapter (){
+        if(list.size()==0)
+            view.findViewById(R.id.no_shows_found).setVisibility(View.VISIBLE);
+        else
+            view.findViewById(R.id.no_shows_found).setVisibility(View.GONE);
        // if(completedTasks!=myFavouriteShows.length) return;
-        showListAdapter = new ShowListAdapter(list, getActivity(), getFragmentManager());
+        showListAdapter = new ShowListAdapter(list, getActivity());
+        showListAdapter.setOnItemClickListener(this);
         recyclerView.setAdapter(showListAdapter);
+    }
+
+    @Override
+    public void onItemClick(View view, ShowDto showListItem) {
+        ShowDetailsActivity.navigate((AppCompatActivity) getActivity(), view.findViewById(R.id.item_image), showListItem);
     }
 }

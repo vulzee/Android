@@ -14,28 +14,22 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/login_button"
-            android:layout_width="fill_parent"
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#416BC1"
-            android:onClick="onClick"
-            android:text="@string/login_facebook_button"
-            android:textColor="#ffffff"
-            android:textStyle="bold"
+            android:layout_centerInParent="true"
             android:layout_margin="@dimen/button_default_margin"
-            android:layout_centerInParent="true"/>
-        <Button
-            android:id="@+id/google_login_button"
-            android:layout_width="fill_parent"
+            />
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/facebook_login_button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#fafafa"
-            android:onClick="onClick"
-            android:text="@string/login_google_button"
-            android:textColor="#263238"
-            android:textStyle="bold"
-            android:layout_margin="@dimen/button_default_margin"
-            android:layout_centerInParent="true"/>
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:layout_margin="@dimen/button_default_margin"/>
 
     </LinearLayout>
 
