@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndroidProjectApi.Data", "AndroidProjectApi.Data\AndroidProjectApi.Data.csproj", "{EDF83A4E-280D-4061-A8FE-222737ACDFD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndroidProjectApi.Entities", "AndroidProjectApi.Entities\AndroidProjectApi.Entities.csproj", "{671A14EB-4C2D-4D06-81AF-6B77E00745B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndroidProjectApi.Api", "AndroidProjectApi.Api\AndroidProjectApi.Api.csproj", "{D30F62A3-10F1-4D42-9DB9-461064DDA5A7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EDF83A4E-280D-4061-A8FE-222737ACDFD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDF83A4E-280D-4061-A8FE-222737ACDFD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDF83A4E-280D-4061-A8FE-222737ACDFD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDF83A4E-280D-4061-A8FE-222737ACDFD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{671A14EB-4C2D-4D06-81AF-6B77E00745B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{671A14EB-4C2D-4D06-81AF-6B77E00745B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{671A14EB-4C2D-4D06-81AF-6B77E00745B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{671A14EB-4C2D-4D06-81AF-6B77E00745B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D30F62A3-10F1-4D42-9DB9-461064DDA5A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D30F62A3-10F1-4D42-9DB9-461064DDA5A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D30F62A3-10F1-4D42-9DB9-461064DDA5A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D30F62A3-10F1-4D42-9DB9-461064DDA5A7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
