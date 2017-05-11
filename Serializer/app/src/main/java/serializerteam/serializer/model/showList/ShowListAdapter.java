@@ -56,6 +56,7 @@ public class ShowListAdapter extends RecyclerView.Adapter<ShowListViewHolder> {
     }
 
     private void setShoppingListItemImage(ShowListViewHolder holder, ShowDto showListItem) {
+        if(showListItem.getImage()==null)return;
         String imageUrl = showListItem.getImage().values().iterator().next();
         if(!imageUrl.isEmpty()) {
             Picasso.with(mContext).load(imageUrl).into(holder.mImageView);
