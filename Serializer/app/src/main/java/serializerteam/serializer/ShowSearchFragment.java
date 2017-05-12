@@ -4,15 +4,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.text.Editable;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -23,53 +26,59 @@ import retrofit2.Response;
 import serializerteam.serializer.api.ApiSettings;
 import serializerteam.serializer.dto.SearchedShow;
 import serializerteam.serializer.dto.ShowDto;
+import serializerteam.serializer.model.showList.ShowListAdapter;
 
-public class ShowSearchFragment extends Fragment {
+public class ShowSearchFragment extends Fragment implements ShowListAdapter.OnItemClickListener {
 
-    private String spinnerCategories[];
-    private Spinner genreSpinner;
+    private RecyclerView recyclerView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_search_shows, container, false);
-        spinnerCategories=new String[5];
-        spinnerCategories[0]="genre 1";
-        spinnerCategories[1]="genre 2";
-        spinnerCategories[2]="genre 3";
-        spinnerCategories[3]="genre 4";
-        spinnerCategories[4]="genre 5";
-        genreSpinner = (Spinner) view.findViewById(R.id.genre_spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, spinnerCategories);
-        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        genreSpinner.setAdapter(adapter);
 
-        Button searchShowsButton = (Button)view.findViewById(R.id.search_shows_button);
-        searchShowsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchShows(view);
-            }
-        });
+        recyclerView = (RecyclerView) view.findViewById(R.id.search_results);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        getActivity().setTitle(getString(R.string.search_shows));
+
+        setHasOptionsMenu(true);
         return view;
     }
 
-    private void searchShows(View view) {
-        final FragmentManager fragmentManager = getFragmentManager();
-        final MyShowsFragment fragment = new MyShowsFragment();
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        inflater.inflate(R.menu.search_menu, menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        final SearchView searchView = new SearchView(((MainActivity) getActivity()).getSupportActionBar().getThemedContext());
+        MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
+        MenuItemCompat.setActionView(item, searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchShows(query);
+                return true;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchShows(newText);
+                return true;
+            }
+        });
 
-        String name = ((EditText)view.findViewById(R.id.name_input)).getText().toString();
-        ApiSettings.showsApiService.searchShows(name).enqueue(new Callback<SearchedShow[]>() {
+    }
+
+   private void searchShows(String query) {
+       ApiSettings.showsApiService.searchShows(query).enqueue(new Callback<SearchedShow[]>() {
             @Override
             public void onResponse(Call<SearchedShow[]> call, Response<SearchedShow[]> response) {
                 ArrayList<ShowDto> searchedShows= new ArrayList<>(response.body().length);
                 for(SearchedShow i : response.body()){
                     searchedShows.add(i.getShow());
                 }
-                fragment.setSearchedShows(searchedShows);
-                fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame,fragment)
-                        .commit();
+                setShowListAdapter(searchedShows);
             }
 
             @Override
@@ -78,6 +87,22 @@ public class ShowSearchFragment extends Fragment {
                 Toast.makeText(getActivity(), "Something gone bad.", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
+
+    private void setShowListAdapter (ArrayList<ShowDto> list){
+        if(list.size()==0)
+            getView().findViewById(R.id.no_shows_found).setVisibility(View.VISIBLE);
+        else
+            getView().findViewById(R.id.no_shows_found).setVisibility(View.GONE);
+        ShowListAdapter showListAdapter = new ShowListAdapter(list, getActivity());
+        showListAdapter.setOnItemClickListener(this);
+        recyclerView.setAdapter(showListAdapter);
+    }
+
+    @Override
+    public void onItemClick(View view, ShowDto showListItem) {
+        ShowDetailsActivity.navigate((AppCompatActivity) getActivity(), view.findViewById(R.id.item_image), showListItem);
+    }
+
+
 }
