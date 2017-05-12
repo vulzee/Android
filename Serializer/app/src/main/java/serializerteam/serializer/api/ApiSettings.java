@@ -10,12 +10,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
 ///class generator http://www.jsonschema2pojo.org
 public final class ApiSettings {
     static String API_URL="https://api.tvmaze.com";
+    static String DB_API_URL = "https://androidshowsapi.azurewebsites.net";
+
     static Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(API_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build();
+
+    static Retrofit retrofitDbApi = new Retrofit.Builder()
+            .baseUrl(DB_API_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+
     static public ShowsApi showsApiService = retrofit.create(ShowsApi.class);
     static public PeopleApi peopleApi = retrofit.create(PeopleApi.class);
     static public UrlApi urlApi = retrofit.create(UrlApi.class);
     static public EpisodeApi episodeApi = retrofit.create(EpisodeApi.class);
+
+    static public UsersApi usersApi = retrofitDbApi.create(UsersApi.class);
 }

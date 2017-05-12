@@ -1,7 +1,9 @@
 package serializerteam.serializer;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +29,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     GoogleApiClient mGoogleApiClient;
     int RC_SIGN_IN=945;
     private CallbackManager facebookCallbackManager;
+
+    private String PREF_NAME = "serializer";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +74,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Log.d("GoogleSignIn", "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
             GoogleSignInAccount acct = result.getSignInAccount();
+            saveId(result.getSignInAccount().getId());
             onLoginSuccessful();
         } else {
             onLoginFailed();
@@ -94,11 +99,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void initializeFacebook() {
         facebookCallbackManager = CallbackManager.Factory.create();
-        LoginButton loginButton = (LoginButton) findViewById(R.id.facebook_login_button);
+        final LoginButton loginButton = (LoginButton) findViewById(R.id.facebook_login_button);
         loginButton.registerCallback(facebookCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Toast.makeText(LoginActivity.this,"Success", Toast.LENGTH_LONG).show();
+                saveId(loginResult.getAccessToken().getUserId());
                 onLoginSuccessful();
             }
 
@@ -124,6 +130,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private boolean isLoggedIn() {
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        if(accessToken != null){
+            Log.v("aaaaaaaaaaaaaaaa", accessToken.getUserId());
+            saveId(accessToken.getUserId());
+        }
         return AccessToken.getCurrentAccessToken() != null || mGoogleApiClient.isConnected();
+    }
+
+    private void saveId(String userId){
+        SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME, MODE_PRIVATE).edit();
+        editor.putString("userId",userId);
+        editor.commit();
     }
 }
