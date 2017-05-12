@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -23,6 +24,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import serializerteam.serializer.api.ApiSettings;
 import serializerteam.serializer.api.ShowsApi;
+import serializerteam.serializer.api.StatusCodes;
 import serializerteam.serializer.api.UrlApi;
 import serializerteam.serializer.dto.EpisodeDto;
 import serializerteam.serializer.dto.PersonDto;
@@ -31,15 +33,18 @@ import serializerteam.serializer.dto.ShowDto;
 import serializerteam.serializer.model.showList.ShowListAdapter;
 import serializerteam.serializer.model.showList.ShowListItem;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class MyShowsFragment extends Fragment implements ShowListAdapter.OnItemClickListener {
     private RecyclerView recyclerView;
     private ArrayList<ShowDto> list;
     private ShowListAdapter showListAdapter;
-    private int[] showsId = {1456,224,1323,412};
     private volatile int completedTasks =0;
     // if search set to true
     private boolean searchedShows = false;
+    private String userId;
 
+    int[] myFavouriteShows;
     private View view;
   //  private int[] searchedShowsId;
     @Nullable
@@ -52,10 +57,12 @@ public class MyShowsFragment extends Fragment implements ShowListAdapter.OnItemC
 
         //get shows ids from DB or anywhere else
         //showsID=....;
+        userId = getActivity().getSharedPreferences("serializer", MODE_PRIVATE).getString("userId", null);
+        Log.v("aaaaaaaaaaaaaaaa", userId);
         if(searchedShows){
             setShowListAdapter();
         }else
-            initData(showsId);
+            initData();
 
         return view;
     }
@@ -67,32 +74,50 @@ public class MyShowsFragment extends Fragment implements ShowListAdapter.OnItemC
 
     }
 
+    private void initData() {
 
-    private void initData(final int[] myFavouriteShows) {
-        list = new ArrayList<>();
-        Call<ShowDto>[] tasks = new Call[myFavouriteShows.length];
-       // list.add(0, new ShowListItem(0, "Super movie", "Super duper", ""));
-        for (int i=0;i<myFavouriteShows.length;i++) {
-            tasks[i]=ApiSettings.showsApiService.getShow(myFavouriteShows[i]);
-            tasks[i].enqueue(new Callback<ShowDto>() {
-                @Override
-                public void onResponse(Call<ShowDto> call, Response<ShowDto> response) {
-                    if(response.body()!=null)
-                        list.add(response.body());
-                    completedTasks++;
-                    if(completedTasks!=myFavouriteShows.length)
-                        setShowListAdapter();
+        ApiSettings.usersApi.getUserShows(userId).enqueue(new Callback<int[]>() {
+            @Override
+            public void onResponse(Call<int[]> call, Response<int[]> response) {
+                myFavouriteShows = new int[response.body().length];
+                for(int i=0;i<response.body().length;i++) {
+                    myFavouriteShows[i] = response.body()[i];
                 }
+                list = new ArrayList<>();
+                Call<ShowDto>[] tasks = new Call[myFavouriteShows.length];
+                // list.add(0, new ShowListItem(0, "Super movie", "Super duper", ""));
+                for (int i=0;i<myFavouriteShows.length;i++) {
+                    tasks[i]=ApiSettings.showsApiService.getShow(myFavouriteShows[i]);
+                    tasks[i].enqueue(new Callback<ShowDto>() {
+                        @Override
+                        public void onResponse(Call<ShowDto> call, Response<ShowDto> response) {
+                            if(response.body()!=null)
+                                list.add(response.body());
+                            completedTasks++;
+                            if(completedTasks == myFavouriteShows.length) {
+                                setShowListAdapter();
+                            }
+                        }
 
-                @Override
-                public void onFailure(Call<ShowDto> call, Throwable t) {
-                    Log.e("ERR",t.toString());
-                    completedTasks++;
-                    if(completedTasks!=myFavouriteShows.length)
-                        setShowListAdapter();
+                        @Override
+                        public void onFailure(Call<ShowDto> call, Throwable t) {
+                            Log.e("ERR",t.toString());
+                            completedTasks++;
+                            if(completedTasks==myFavouriteShows.length)
+                                setShowListAdapter();
+                        }
+                    });
                 }
-            });
-        }
+            }
+
+            @Override
+            public void onFailure(Call<int[]> call, Throwable t) {
+                Log.e("ERR", t.getMessage());
+                Toast.makeText(getActivity(), "Couldn't get favourites", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
 //        ApiSettings.urlApi.getResponse("http://api.tvmaze.com/episodes/999541").enqueue(new Callback<ResponseBody>() {
 //            @Override
 //            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -137,6 +162,7 @@ public class MyShowsFragment extends Fragment implements ShowListAdapter.OnItemC
     }
 
     private void setShowListAdapter (){
+        Log.v("aaaaa", Integer.toString(list.size()));
         if(list.size()==0)
             view.findViewById(R.id.no_shows_found).setVisibility(View.VISIBLE);
         else

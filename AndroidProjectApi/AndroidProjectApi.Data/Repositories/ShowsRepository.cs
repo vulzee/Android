@@ -23,13 +23,22 @@ namespace AndroidProjectApi.Data.Repositories
             return this.DbContext.Shows.Where(x => x.UserExternalId == userExternalId);
         }
 
-        public void AddShowForUser(string userExternalId, string showExternalId)
+        public bool AddShowForUser(string userExternalId, string showExternalId)
         {
+            var show = this.DbContext.Shows.FirstOrDefault(x => x.ShowExternalId == showExternalId && x.UserExternalId == userExternalId);
+
+            if(show != default(Show))
+            {
+                return false;
+            }
+
             this.DbContext.Shows.Add(new Show() { ShowExternalId = showExternalId, UserExternalId = userExternalId });
             this.DbContext.Commit();
+
+            return true;
         }
 
-        public void DeleteShowForUser(string userExternalId, string showExternalId)
+        public bool DeleteShowForUser(string userExternalId, string showExternalId)
         {
             var show = this.DbContext.Shows.FirstOrDefault(x =>  x.ShowExternalId == showExternalId && x.UserExternalId == userExternalId );
 
@@ -37,7 +46,16 @@ namespace AndroidProjectApi.Data.Repositories
             {
                 this.DbContext.Shows.Remove(show);
                 this.DbContext.Commit();
+
+                return true;
             }
+
+            return false;
+        }
+
+        public bool IsShowInUsersFavourites(string externalUserId, string externalShowId)
+        {
+            return this.DbContext.Shows.Any(x => x.ShowExternalId == externalShowId && x.UserExternalId == externalUserId);
         }
     }
 }

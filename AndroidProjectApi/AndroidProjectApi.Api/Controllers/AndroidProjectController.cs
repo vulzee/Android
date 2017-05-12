@@ -5,6 +5,8 @@ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -26,19 +28,21 @@ namespace AndroidProjectApi.Api.Controllers
 
         [HttpGet]
         [Route("GetUserShows/{externalUserId}")]
-        [ResponseType(typeof(ShowModel))]
-        public IHttpActionResult GetUserShows(string externalUserId)
+        [ResponseType(typeof(int[]))]
+        public IHttpActionResult GetUserShowsIds(string externalUserId)
         {
-            return Ok(Mapper.Map<IEnumerable<ShowModel>>(this.showsRepository.GetShowsForUser(externalUserId)));
+            return Ok(this.showsRepository.GetShowsForUser(externalUserId).Select(x => x.ShowExternalId).ToArray());
         }
 
         [HttpPost]
-        [Route("AddShowForUser/{externalUserId}")]
-        public IHttpActionResult AddShowForUser(string externalUserId, [FromBody]string externalShowId)
+        [Route("AddShowForUser")]
+        public IHttpActionResult AddShowForUser(ExternalForm form)
         {
-            this.showsRepository.AddShowForUser(externalUserId, externalShowId);
+            var added = this.showsRepository.AddShowForUser(form.ExternalUserId, form.ExternalShowId);
+            if(added)
+                return Ok();
 
-            return Ok();
+            return Conflict();
         }
 
         [HttpPost]
@@ -68,12 +72,26 @@ namespace AndroidProjectApi.Api.Controllers
         }
 
         [HttpPost]
-        [Route("DeleteShowForUser/{externalUserId}")]
-        public IHttpActionResult DeleteShowForUser(string externalUserId, [FromBody]string externalShowId)
+        [Route("DeleteShowForUser")]
+        public IHttpActionResult DeleteShowForUser(ExternalForm form)
         {
-            this.showsRepository.DeleteShowForUser(externalUserId, externalShowId);
+            var deleted = this.showsRepository.DeleteShowForUser(form.ExternalUserId, form.ExternalShowId);
+            if (deleted)
+                return Ok();
 
-            return Ok();
+            return Conflict();
+        }
+
+        [HttpPost]
+        [Route("IsShowInUsersFavourites")]
+        public IHttpActionResult IsShowInUsersFavourites(ExternalForm form)
+        {
+            var isFavourite = this.showsRepository.IsShowInUsersFavourites(form.ExternalUserId, form.ExternalShowId);
+
+            if(isFavourite)
+                return Ok();
+
+            return Conflict();
         }
     }
 }
