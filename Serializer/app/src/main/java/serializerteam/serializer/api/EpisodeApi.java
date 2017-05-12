@@ -3,6 +3,7 @@ package serializerteam.serializer.api;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import serializerteam.serializer.dto.EpisodeDto;
 import serializerteam.serializer.dto.PersonDto;
 
 /**
@@ -11,5 +12,5 @@ import serializerteam.serializer.dto.PersonDto;
 
 public interface EpisodeApi {
     @GET("episodes/{id}")
-    Call<PersonDto> getEpisode(@Path("id") int id);
+    Call<EpisodeDto> getEpisode(@Path("id") int id);
 }

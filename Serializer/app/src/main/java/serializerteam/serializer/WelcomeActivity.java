@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.Window;
 
 public class WelcomeActivity extends AppCompatActivity {
     private float x1,x2;

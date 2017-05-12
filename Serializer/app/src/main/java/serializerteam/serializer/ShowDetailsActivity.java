@@ -3,6 +3,8 @@ package serializerteam.serializer;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -101,11 +103,26 @@ public class ShowDetailsActivity extends AppCompatActivity {
                 if (response.body() != null) {
 
                     showDto = response.body();
-                    collapsingToolbarLayout.setTitle(showDto.getName() + " " + showDto.getGenres().toString());
+                    collapsingToolbarLayout.setTitle(showDto.getName());
                     if (showDto.getSummary() != null)
                         ((TextView) findViewById(R.id.item_long_description)).setText(Jsoup.parse(showDto.getSummary()).text());
                     if (showDto.getImage() != null && showDto.getImage().size() > 0)
-                        Picasso.with(ShowDetailsActivity.this).load(showDto.getImage().values().iterator().next()).into((ImageView) findViewById(R.id.toolbar_image));
+                        Picasso.with(ShowDetailsActivity.this).load(showDto.getImage().values().iterator().next()).into((ImageView) findViewById(R.id.toolbar_image), new com.squareup.picasso.Callback() {
+                            @Override
+                            public void onSuccess() {
+                                Bitmap bitmap = ((BitmapDrawable) ((ImageView) findViewById(R.id.toolbar_image)).getDrawable()).getBitmap();
+                                Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+                                    public void onGenerated(Palette palette) {
+                                        supportStartPostponedEnterTransition();
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onError() {
+
+                            }
+                        });
                     else
                         Picasso.with(ShowDetailsActivity.this).load(R.mipmap.ic_launcher).into((ImageView) findViewById(R.id.toolbar_image));
                     list.addAll(showDto.getEmbedded().getCast());
@@ -228,7 +245,7 @@ public class ShowDetailsActivity extends AppCompatActivity {
 
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, transitionImage, EXTRA_IMAGE);
         try {
-            ActivityCompat.startActivity(activity, intent, null);
+            ActivityCompat.startActivity(activity, intent, options.toBundle());
         } catch (Exception e) {
             e.printStackTrace();
             Log.d("TAG", "navigate:", e);
@@ -278,27 +295,12 @@ public class ShowDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void applyPalette(Palette palette) {
-        int primaryDark = getResources().getColor(R.color.colorPrimaryDark);
-        int primary = getResources().getColor(R.color.colorPrimaryDark);
-        collapsingToolbarLayout.setContentScrimColor(palette.getMutedColor(primary));
-        collapsingToolbarLayout.setStatusBarScrimColor(palette.getDarkMutedColor(primaryDark));
-        updateBackground((FloatingActionButton) findViewById(R.id.star_fab), palette);
-        supportStartPostponedEnterTransition();
-    }
-
-    private void updateBackground(FloatingActionButton fab, Palette palette) {
-        int lightVibrantColor = palette.getLightVibrantColor(getResources().getColor(android.R.color.white));
-        int vibrantColor = palette.getVibrantColor(getResources().getColor(R.color.colorPrimaryDark));
-
-        fab.setRippleColor(lightVibrantColor);
-        fab.setBackgroundTintList(ColorStateList.valueOf(vibrantColor));
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if(!isFavourite) MyShowsFragment.removeShowFromFavourites(showDto.getId());
         finish();
         return super.onOptionsItemSelected(item);
     }
+
 
 }

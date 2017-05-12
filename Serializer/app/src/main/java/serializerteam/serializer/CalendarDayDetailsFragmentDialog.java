@@ -13,7 +13,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.common.api.Api;
+
 import java.util.Date;
+
+import serializerteam.serializer.api.UsersApi;
 
 public class CalendarDayDetailsFragmentDialog extends DialogFragment {
 

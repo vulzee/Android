@@ -1,80 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/no_shows_found"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/button_default_margin"
-        android:text="@string/search_for_show_label"
-        android:gravity="center"/>
+        android:textAlignment="center"
+        android:textSize="@dimen/list_item_header_font_size"
+        android:text="@string/no_shows"
+        android:visibility="gone"/>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/button_default_margin"
-        android:layout_marginLeft="@dimen/button_default_margin"
-        android:layout_marginBottom="@dimen/button_default_margin"
-        android:gravity="center">
-        <TextView
-            android:layout_width="@dimen/search_label_width"
-            android:layout_height="wrap_content"
-            android:text="@string/show_name"
-            android:gravity="right"/>
-        <EditText
-            android:id="@+id/name_input"
-            android:layout_width="@dimen/search_text_box_width"
-            android:layout_height="wrap_content"
-            android:background="@android:drawable/editbox_background"/>
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/button_default_margin"
-        android:layout_marginLeft="@dimen/button_default_margin"
-        android:layout_marginBottom="@dimen/button_default_margin"
-        android:gravity="center">
-        <TextView
-            android:layout_width="@dimen/search_label_width"
-            android:layout_height="wrap_content"
-            android:text="@string/show_country"
-            android:gravity="right"/>
-        <EditText
-            android:id="@+id/country_input"
-            android:layout_width="@dimen/search_text_box_width"
-            android:layout_height="wrap_content"
-            android:background="@android:drawable/editbox_background"/>
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/button_default_margin"
-        android:layout_marginLeft="@dimen/button_default_margin"
-        android:layout_marginBottom="@dimen/button_default_margin"
-        android:gravity="center">
-        <TextView
-            android:layout_width="@dimen/search_label_width"
-            android:layout_height="wrap_content"
-            android:text="@string/show_genre"
-            android:gravity="right"/>
-        <Spinner android:id="@+id/genre_spinner"
-            android:layout_width="@dimen/search_text_box_width"
-            android:layout_height="wrap_content" />
-        </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_results"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
-        <Button
-            android:id="@+id/search_shows_button"
-            android:layout_width="@dimen/search_button_width"
-            android:layout_height="@dimen/search_button_height"
-            android:text="@string/search_button_text"></Button>
-    </LinearLayout>
 
 </LinearLayout>
