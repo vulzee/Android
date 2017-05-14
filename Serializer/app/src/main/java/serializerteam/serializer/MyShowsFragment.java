@@ -48,6 +48,12 @@ public class MyShowsFragment extends Fragment implements ShowListAdapter.OnItemC
         return view;
     }
 
+    public static ArrayList<ShowDto> getShowsList(){
+        if(list==null)
+            return new ArrayList<>();
+
+        return list;
+    }
     private void initData() {
         ApiSettings.usersApi.getUserShows(userId).enqueue(new Callback<int[]>() {
             @Override
