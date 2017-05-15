@@ -32,7 +32,17 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
 
     @Override
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-        (new CalendarDayDetailsFragmentDialog()).show(getFragmentManager(), "fragmentManager");
+        CalendarDayDetailsFragmentDialog day =new CalendarDayDetailsFragmentDialog();
+        Bundle args = new Bundle();
+        String d = date.toString().substring(12,date.toString().length()-1);
+        String[] tmp = d.split("-");
+
+        tmp[1]=String.valueOf(new Integer(tmp[1]).intValue()+1).length()==1?"0"+String.valueOf(new Integer(tmp[1]).intValue()+1):String.valueOf(new Integer(tmp[1]).intValue()+1);
+        tmp[2]=tmp[2].length()==1?"0"+tmp[2]:tmp[2];
+
+        args.putString("date", String.format("%s-%s-%s",tmp));
+        day.setArguments(args);
+        day.show(getFragmentManager(), "fragmentManager");
     }
 
 
