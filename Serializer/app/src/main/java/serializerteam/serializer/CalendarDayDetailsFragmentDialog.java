@@ -118,14 +118,14 @@ public class CalendarDayDetailsFragmentDialog extends DialogFragment {
     }
 
 
-    private void getNextEpisode(String url,final int i) {
-        ApiSettings.urlApi.getResponse(url).enqueue(new Callback<ResponseBody>() {
+    private void getNextEpisode(String url,final int showId) {
+        ApiSettings.episodeApi.getEpisodeByDate(showId,date).enqueue(new Callback<EpisodeDto>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<EpisodeDto> call, Response<EpisodeDto> response) {
                 if (response.body() != null) {
-                    EpisodeDto e=new Gson().fromJson(response.body().charStream(), EpisodeDto.class);
-                    if(shows.get(i).getImage()!=null) {
-                        String imageUrl = shows.get(i).getImage().values().iterator().next();
+                    EpisodeDto e=response.body();//new Gson().fromJson(response.body().charStream(), EpisodeDto.class);
+                    if(shows.get(showId).getImage()!=null) {
+                        String imageUrl = shows.get(showId).getImage().values().iterator().next();
                         if (!imageUrl.isEmpty()) {
                             HashMap<String,String> image = e.getImage();
                             if(image ==  null)
@@ -143,7 +143,7 @@ public class CalendarDayDetailsFragmentDialog extends DialogFragment {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<EpisodeDto> call, Throwable t) {
                 Log.e("ERR", t.toString());
                 episodesNo--;
                 if(episodesNo==0)
