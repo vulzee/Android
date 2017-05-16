@@ -92,7 +92,7 @@ public class CalendarDayDetailsFragmentDialog extends DialogFragment {
 
                 for (int i = 0; i <shows.size(); i++) {
                     if (shows.get(i).getLinks().get("nextepisode") != null && shows.get(i).getLinks().get("nextepisode").href.length() > 0) {
-                        getNextEpisode(shows.get(i).getLinks().get("nextepisode").href, i);
+                        getNextEpisode( i);
                         episodesNo++;
                     }
                 }
@@ -118,7 +118,7 @@ public class CalendarDayDetailsFragmentDialog extends DialogFragment {
     }
 
 
-    private void getNextEpisode(String url,final int showId) {
+    private void getNextEpisode(final int showId) {
         ApiSettings.episodeApi.getEpisodeByDate(showId,date).enqueue(new Callback<EpisodeDto>() {
             @Override
             public void onResponse(Call<EpisodeDto> call, Response<EpisodeDto> response) {
