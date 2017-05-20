@@ -119,23 +119,27 @@ public class CalendarDayDetailsFragmentDialog extends DialogFragment {
 
 
     private void getNextEpisode(final int showId) {
-        ApiSettings.episodeApi.getEpisodeByDate(showId,date).enqueue(new Callback<EpisodeDto>() {
+        ApiSettings.episodeApi.getEpisodeByDate(shows.get(showId).getId(),date).enqueue(new Callback<EpisodeDto[]>() {
             @Override
-            public void onResponse(Call<EpisodeDto> call, Response<EpisodeDto> response) {
+            public void onResponse(Call<EpisodeDto[]> call, Response<EpisodeDto[]> response) {
                 if (response.body() != null) {
-                    EpisodeDto e=response.body();//new Gson().fromJson(response.body().charStream(), EpisodeDto.class);
+                    EpisodeDto[] e=response.body();//new Gson().fromJson(response.body().charStream(), EpisodeDto.class);
                     if(shows.get(showId).getImage()!=null) {
                         String imageUrl = shows.get(showId).getImage().values().iterator().next();
-                        if (!imageUrl.isEmpty()) {
-                            HashMap<String,String> image = e.getImage();
-                            if(image ==  null)
-                                image= new HashMap<String,String>();
-                            image.put("show", imageUrl);
-                            e.setImage(image);
+                        for (int m = 0; m < e.length; m++) {
+                            if (!imageUrl.isEmpty()) {
+                                HashMap<String, String> image = e[m].getImage();
+                                if (image == null)
+                                    image = new HashMap<String, String>();
+                                image.put("show", imageUrl);
+                                e[m].setImage(image);
+                            }
+
+
+                        if (e[m].getAirdate().equals(date))
+                            list.add(e[m]);
                         }
                     }
-                    if(e.getAirdate().equals(date))
-                        list.add(e);
                 }
                 episodesNo--;
                 if(episodesNo==0)
@@ -143,7 +147,7 @@ public class CalendarDayDetailsFragmentDialog extends DialogFragment {
             }
 
             @Override
-            public void onFailure(Call<EpisodeDto> call, Throwable t) {
+            public void onFailure(Call<EpisodeDto[]> call, Throwable t) {
                 Log.e("ERR", t.toString());
                 episodesNo--;
                 if(episodesNo==0)

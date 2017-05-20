@@ -57,24 +57,25 @@ public class CheckShowsService extends BroadcastReceiver
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
         String formatted = format1.format(calendar.getTime());
-        ApiSettings.episodeApi.getEpisodeByDate(showId,formatted).enqueue(new Callback<EpisodeDto>() {
+        ApiSettings.episodeApi.getEpisodeByDate(showId,formatted).enqueue(new Callback<EpisodeDto[]>() {
             @Override
-            public void onResponse(Call<EpisodeDto> call, Response<EpisodeDto> response) {
+            public void onResponse(Call<EpisodeDto[]> call, Response<EpisodeDto[]> response) {
                 if (response.body() != null) {
-                    EpisodeDto e=response.body();
-                    int hour = Integer.getInteger(e.getAirdate().substring(0,2)).intValue()-notifyHour;
-                    hour = notifyMinute>0?hour-1:hour;
-                    int minute =Integer.getInteger(e.getAirdate().substring(e.getAirdate().length()-2,e.getAirdate().length())).intValue()-notifyMinute;
-                    minute = minute<0?minute+60:minute;
-                    NotificationService ns = new NotificationService();
-                    //TODO
-                    ns.setAlarm(context,"Episode is coming!",e.getName(), hour, minute);
-
+                    EpisodeDto[] e=response.body();
+                    for(int m=0;m<e.length;m++) {
+                        int hour = Integer.getInteger(e[m].getAirdate().substring(0, 2)).intValue() - notifyHour;
+                        hour = notifyMinute > 0 ? hour - 1 : hour;
+                        int minute = Integer.getInteger(e[m].getAirdate().substring(e[m].getAirdate().length() - 2, e[m].getAirdate().length())).intValue() - notifyMinute;
+                        minute = minute < 0 ? minute + 60 : minute;
+                        NotificationService ns = new NotificationService();
+                        //TODO
+                        ns.setAlarm(context, "Episode is coming!", e[m].getName(), hour, minute);
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<EpisodeDto> call, Throwable t) {
+            public void onFailure(Call<EpisodeDto[]> call, Throwable t) {
                 Log.e("ERR", t.toString());
             }
         });

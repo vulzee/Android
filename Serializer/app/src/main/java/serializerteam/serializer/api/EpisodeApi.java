@@ -17,5 +17,5 @@ public interface EpisodeApi {
     @GET("episodes/{id}")
     Call<EpisodeDto> getEpisode(@Path("id") int id);
     @GET("shows/{id}/episodesbydate")//yyyy-mm-dd
-    Call<EpisodeDto> getEpisodeByDate(@Path("id")int showId, @Query("date") String date);
+    Call<EpisodeDto[]> getEpisodeByDate(@Path("id")int showId, @Query("date") String date);
 }
