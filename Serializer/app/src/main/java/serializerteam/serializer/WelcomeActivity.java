@@ -2,6 +2,7 @@ package serializerteam.serializer;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 
 import android.support.v7.app.AppCompatActivity;
@@ -25,13 +26,16 @@ public class WelcomeActivity extends AppCompatActivity {
 //        new ShedulerJobService().scheduleJob(this);
 //        //intent = new Intent(this, NotificationService.class);
 //        startService(intent);
-        try {
-            NotificationService ns = new NotificationService();
-            //TODO
-            ns.setAlarm(getApplicationContext(), "Episode is coming!", "odcinek", 15, 15);
-        }catch(Exception e){
-            Log.d("ERR",e.toString());
-        }
+
+//        try {
+//            NotificationService ns = new NotificationService();
+//            //TODO
+//            ns.setAlarm(getApplicationContext(), "Episode is coming!", "odcinek", 17, 19);
+//           // Intent intent = new Intent(this,NotificationService.class);
+//           // sendBroadcast(intent);
+//        }catch(Exception e){
+//            Log.d("ERR",e.toString());
+//        }
        enableReceiver();
     }
 

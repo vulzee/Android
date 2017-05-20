@@ -61,7 +61,8 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>
             </intent-filter>
         </receiver>
-        <receiver android:process=":remote" android:name=".services.NotificationService"></receiver>
+        <receiver android:enabled="true" android:process=":remote" android:name=".services.NotificationService"></receiver>
+
     </application>
 
 </manifest>

@@ -53,15 +53,17 @@ public class NotificationService extends BroadcastReceiver {
         this.episodeTitle=episodeTitle;
         AlarmManager am =( AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(context, NotificationService.class);
-        PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
-
+        PendingIntent pi = PendingIntent.getBroadcast(context, new Random().nextInt(), i, 0);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY,hour);
         calendar.set(Calendar.MINUTE,minute);
-
-        am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                calendar.getTimeInMillis(), pi);
+//        am.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+//                calendar.getTimeInMillis(), pi);
+       //calendar.add(Calendar.MILLISECOND,5000);
+        am.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pi);
+//        am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+//                calendar.getTimeInMillis(), pi);
     }
 
     public void setAlarm(Context context,String title, String episodeTitle, int hour)
