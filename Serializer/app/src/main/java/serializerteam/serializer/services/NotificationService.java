@@ -36,7 +36,7 @@ public class NotificationService extends BroadcastReceiver {
         wl.acquire();
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-                    .setSmallIcon(R.drawable.com_facebook_button_icon)
+                    .setSmallIcon(R.drawable.logo_serializer)
                     .setContentTitle(title)
                     .setContentText(episodeTitle);
 
