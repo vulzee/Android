@@ -92,9 +92,9 @@ public class CheckShowsService extends BroadcastReceiver
                 if (response.body() != null) {
                     EpisodeDto[] e=response.body();
                     for(int m=0;m<e.length;m++) {
-                        int hour = Integer.getInteger(e[m].getAirdate().substring(0, 2)).intValue() - notifyHour;
+                        int hour = Integer.parseInt(e[m].getAirtime().substring(0, 2)) - notifyHour;
                         hour = notifyMinute > 0 ? hour - 1 : hour;
-                        int minute = Integer.getInteger(e[m].getAirdate().substring(e[m].getAirdate().length() - 2, e[m].getAirdate().length())).intValue() - notifyMinute;
+                        int minute = Integer.parseInt(e[m].getAirtime().substring(e[m].getAirtime().length() - 2, e[m].getAirtime().length())) - notifyMinute;
                         minute = minute < 0 ? minute + 60 : minute;
                         NotificationService ns = new NotificationService();
                         //TODO
