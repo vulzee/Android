@@ -58,6 +58,8 @@ public class NotificationService extends BroadcastReceiver {
         PendingIntent pi = PendingIntent.getBroadcast(context, new Random().nextInt(), i, 0);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
+        if(hour<calendar.get(Calendar.HOUR_OF_DAY))
+            return;
         calendar.set(Calendar.HOUR_OF_DAY,hour);
         calendar.set(Calendar.MINUTE,minute);
 //        am.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP,
