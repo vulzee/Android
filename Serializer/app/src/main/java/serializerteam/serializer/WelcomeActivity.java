@@ -10,8 +10,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import serializerteam.serializer.services.CheckShowsService;
 import serializerteam.serializer.services.NotificationService;
-import serializerteam.serializer.services.SampleBootReceiver;
+
 
 public class WelcomeActivity extends AppCompatActivity {
     private float x1,x2;
@@ -23,31 +24,20 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         mRadarView = (RadarView) findViewById(R.id.radarView);
-//        new ShedulerJobService().scheduleJob(this);
-//        //intent = new Intent(this, NotificationService.class);
-//        startService(intent);
 
-//        try {
-//            NotificationService ns = new NotificationService();
-//            //TODO
-//            ns.setAlarm(getApplicationContext(), "Episode is coming!", "odcinek", 17, 19);
-//           // Intent intent = new Intent(this,NotificationService.class);
-//           // sendBroadcast(intent);
-//        }catch(Exception e){
-//            Log.d("ERR",e.toString());
-//        }
        enableReceiver();
     }
 
     private void enableReceiver(){
-        ComponentName receiver = new ComponentName(this, SampleBootReceiver.class);
+        ComponentName receiver = new ComponentName(this, CheckShowsService.class);
         PackageManager pm = this.getPackageManager();
 
         pm.setComponentEnabledSetting(receiver,
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 PackageManager.DONT_KILL_APP);
-
-        SampleBootReceiver.alarm.setAlarm(getApplicationContext());
+        Intent intent = new Intent(this,CheckShowsService.class);
+        sendBroadcast(intent);
+        //SampleBootReceiver.alarm.setAlarm(getApplicationContext());
         //disable receiver
 //        ComponentName receiver = new ComponentName(context, SampleBootReceiver.class);
 //        PackageManager pm = context.getPackageManager();

@@ -1,11 +1,14 @@
 package serializerteam.serializer.services;
 
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.PowerManager;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,6 +19,7 @@ import java.util.HashMap;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import serializerteam.serializer.R;
 import serializerteam.serializer.api.ApiSettings;
 import serializerteam.serializer.dto.EpisodeDto;
 import serializerteam.serializer.dto.ShowDto;
@@ -24,12 +28,37 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class CheckShowsService extends BroadcastReceiver
 {
+    public static String date="";
     //o tyle godzin i minut ma byc wczesniej przypomniane
     public int notifyHour=1;
     public int notifyMinute=0;
     @Override
     public void onReceive(Context context, Intent intent)
     {
+        final ConnectivityManager connMgr = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        final android.net.NetworkInfo wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+
+        final android.net.NetworkInfo mobile = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        String actualDate = format1.format(calendar.getTime());
+        if ((!wifi.isAvailable() && !mobile.isAvailable())||date.equals(actualDate)) {
+            return;
+        }
+
+        ////////////////
+
+//
+//        NotificationService ns = new NotificationService();
+//        //TODO
+//        ns.setAlarm(context, "Episode is coming!", "jaki tam ep", 10, 16);
+
+        /////////////////
+
         final Context contextTmp=context;
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "");
@@ -49,7 +78,7 @@ public class CheckShowsService extends BroadcastReceiver
                 Log.e("ERR", t.getMessage());
             }
         });
-
+        date = actualDate;
         wl.release();
     }
 //need to be somewhere else
@@ -80,7 +109,7 @@ public class CheckShowsService extends BroadcastReceiver
             }
         });
     }
-
+    //useless
     public void setAlarm(Context context)
     {
         AlarmManager am =( AlarmManager)context.getSystemService(Context.ALARM_SERVICE);

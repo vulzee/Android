@@ -26,8 +26,8 @@ import serializerteam.serializer.R;
 public class NotificationService extends BroadcastReceiver {
 
     private int mId= new Random().nextInt();
-    private String title="ShowTitle";
-    private String episodeTitle="EpisodeTitle";
+  //  private static String title="ShowTitle";
+   // private static String episodeTitle="EpisodeTitle";
     @Override
     public void onReceive(Context context, Intent intent)
     {
@@ -37,8 +37,8 @@ public class NotificationService extends BroadcastReceiver {
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
                     .setSmallIcon(R.drawable.logo_serializer)
-                    .setContentTitle(title)
-                    .setContentText(episodeTitle);
+                    .setContentTitle(intent.getStringExtra("showTitle"))
+                    .setContentText(intent.getStringExtra("episodeTitle"));
 
             NotificationManager mNotificationManager =
                     (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
@@ -49,10 +49,12 @@ public class NotificationService extends BroadcastReceiver {
 
     public void setAlarm(Context context, String title, String episodeTitle, int hour, int minute)
     {
-        this.title=title;
-        this.episodeTitle=episodeTitle;
+      //  this.title=title;
+    //    this.episodeTitle=episodeTitle;
         AlarmManager am =( AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(context, NotificationService.class);
+        i.putExtra("showTitle",title);
+        i.putExtra("episodeTitle",episodeTitle);
         PendingIntent pi = PendingIntent.getBroadcast(context, new Random().nextInt(), i, 0);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -68,10 +70,12 @@ public class NotificationService extends BroadcastReceiver {
 
     public void setAlarm(Context context,String title, String episodeTitle, int hour)
     {
-        this.title=title;
-        this.episodeTitle=episodeTitle;
+     //  this.title=title;
+   //     this.episodeTitle=episodeTitle;
         AlarmManager am =( AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(context, NotificationService.class);
+        i.putExtra("showTitle",title);
+        i.putExtra("episodeTitle",episodeTitle);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
 
         Calendar calendar = Calendar.getInstance();

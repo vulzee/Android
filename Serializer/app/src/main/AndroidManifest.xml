@@ -53,8 +53,13 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <receiver
+            android:enabled="true"
             android:name=".services.CheckShowsService"
-            android:exported="false"/>
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
         <receiver android:name=".services.SampleBootReceiver"
             android:enabled="false">
             <intent-filter>
