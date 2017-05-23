@@ -3,7 +3,7 @@
     package="serializerteam.serializer">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
     <activity
         android:name="com.facebook.CustomTabActivity"
         android:exported="true">
@@ -52,6 +52,22 @@
             android:label="@string/title_activity_show_details"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <receiver
+            android:enabled="true"
+            android:name=".services.CheckShowsService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".services.SampleBootReceiver"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+            </intent-filter>
+        </receiver>
+        <receiver android:enabled="true" android:process=":remote" android:name=".services.NotificationService"></receiver>
+
     </application>
 
 </manifest>
