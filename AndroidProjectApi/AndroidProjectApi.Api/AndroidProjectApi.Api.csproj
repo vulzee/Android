@@ -180,6 +180,7 @@
     <Compile Include="Mappings\DomainToViewModelMappingProfile.cs" />
     <Compile Include="Mappings\ViewModelToDomainMappingProfile.cs" />
     <Compile Include="Models\ExternalForm.cs" />
+    <Compile Include="Models\ExternalSettingsForm.cs" />
     <Compile Include="Models\ShowModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -20,10 +20,13 @@ namespace AndroidProjectApi.Api.Controllers
 
         private ShowsRepository showsRepository;
 
+        private SettingsRepository settingsRepository;
+
         public AndroidProjectController()
         {
             this.showsRepository = new ShowsRepository(new DbFactory());
             this.usersRepository = new UsersRepository(new DbFactory());
+            this.settingsRepository = new SettingsRepository(new DbFactory());
         }
 
         [HttpGet]
@@ -92,6 +95,23 @@ namespace AndroidProjectApi.Api.Controllers
                 return Ok();
 
             return Conflict();
+        }
+
+        [HttpGet]
+        [Route("GetUserNotificationTime/{externalUserId}")]
+        [ResponseType(typeof(int))]
+        public IHttpActionResult GetUserNotificationTime(string externalUserId)
+        {
+            return Ok(this.settingsRepository.GetNotificationTime(externalUserId));
+        }
+
+        [HttpPost]
+        [Route("SaveUserNotificationTime")]
+        public IHttpActionResult SaveUserNotificationTime(ExternalSettingsForm form)
+        {
+            this.settingsRepository.SaveNotificationTime(form.ExternalUserId, form.Time);
+
+            return Ok();
         }
     }
 }

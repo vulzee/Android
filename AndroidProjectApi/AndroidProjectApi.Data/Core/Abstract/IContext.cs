@@ -11,5 +11,7 @@ namespace AndroidProjectApi.Data.Core.Abstract
         IDbSet<Show> Shows { get; set; }
 
         IDbSet<User> Users { get; set; }
+
+        IDbSet<Setting> Settings { get; set; }
     }
 }

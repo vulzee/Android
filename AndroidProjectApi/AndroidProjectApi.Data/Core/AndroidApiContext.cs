@@ -8,9 +8,21 @@ namespace AndroidProjectApi.Data.Core
 {
     public class AndroidApiContext : DbContext, IContext
     {
+        public AndroidApiContext() : base("AndroidApiContext")
+        {
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            Database.SetInitializer<AndroidApiContext>(new AndroidApiInit());
+            base.OnModelCreating(modelBuilder);
+        }
+
         public IDbSet<Show> Shows { get; set; }
 
         public IDbSet<User> Users { get; set; }
+
+        public IDbSet<Setting> Settings { get; set; }
 
         public virtual void Commit()
         {
