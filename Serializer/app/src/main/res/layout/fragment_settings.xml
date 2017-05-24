@@ -31,18 +31,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/notifications"
+            android:text="@string/notifications_time"
             android:gravity="center"/>
 
-        <SeekBar
-            android:layout_width="@dimen/toggle_button_width"
-            android:layout_height="wrap_content"
-            android:id="@+id/notification_time"/>
+        <EditText
+            android:layout_width="@dimen/notification_label_width"
+            android:layout_height="match_parent"
+            android:id="@+id/notification_label"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/notification_label"/>
+            android:text="@string/time_min"
+            android:gravity="center"/>
     </LinearLayout>
 
     <Button

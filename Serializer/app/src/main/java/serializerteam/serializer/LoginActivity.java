@@ -34,13 +34,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.v("aaaaaaaaaaaaaaaa", "one");
         super.onCreate(savedInstanceState);
+        Log.v("aaaaaaaaaaaaaaaa", "two");
         setContentView(R.layout.activity_login);
+        Log.v("aaaaaaaaaaaaaaaa", "three");
         initializeGoogle();
+        Log.v("aaaaaaaaaaaaaaaa", "four");
         initializeFacebook();
+        Log.v("aaaaaaaaaaaaaaaa", "five");
         if(isLoggedIn()) {
+            Log.v("aaaaaaaaaaaaaaaa", "six");
             onLoginSuccessful();
         }
+        Log.v("aaaaaaaaaaaaaaaa", "seven");
     }
 
     @Override

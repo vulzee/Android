@@ -51,6 +51,12 @@ public class MyShowsFragment extends Fragment implements ShowListAdapter.OnItemC
         return view;
     }
 
+    @Override
+    public void onDestroy() {
+        showsDbAdapter.closeDbContext();
+        super.onDestroy();
+    }
+
     public static ArrayList<ShowDto> getShowsList(){
         if(list==null)
             return new ArrayList<>();

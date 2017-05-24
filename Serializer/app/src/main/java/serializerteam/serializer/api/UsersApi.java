@@ -26,4 +26,7 @@ public interface UsersApi {
 
     @GET("/api/GetUserShows/{externalUserId}")
     Call<int[]> getUserShows(@Path("externalUserId") String externalUserId);
+
+    @GET("/api/GetUserNotificationTime/{externalUserId}")
+    Call<ResponseBody> getUserNotificationTime(@Path("externalUserId") String externalUserId);
 }
