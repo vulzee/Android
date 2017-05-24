@@ -37,7 +37,8 @@
         <EditText
             android:layout_width="@dimen/notification_label_width"
             android:layout_height="match_parent"
-            android:id="@+id/notification_label"/>
+            android:id="@+id/notification_time"
+            android:inputType="number"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -51,5 +52,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/button_default_margin"
         android:layout_gravity="center"
-        android:text="@string/save_button"/>
+        android:text="@string/save_button"
+        android:id="@+id/settings_save"/>
 </LinearLayout>
