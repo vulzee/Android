@@ -18,6 +18,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import serializerteam.serializer.api.ApiSettings;
+import serializerteam.serializer.database.ShowsDbAdapter;
 import serializerteam.serializer.dto.ShowDto;
 import serializerteam.serializer.model.showList.ShowListAdapter;
 
@@ -28,6 +29,7 @@ public class MyShowsFragment extends Fragment implements ShowListAdapter.OnItemC
     private static ArrayList<ShowDto> list = new ArrayList<>();
     private volatile int completedTasks = 0;
     private String userId;
+    private ShowsDbAdapter showsDbAdapter;
 
     int[] myFavouriteShows;
     private View view;
@@ -36,6 +38,7 @@ public class MyShowsFragment extends Fragment implements ShowListAdapter.OnItemC
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_my_shows, container, false);
+        showsDbAdapter = new ShowsDbAdapter(getContext()).getDbContext();
 
         getActivity().setTitle(getString(R.string.my_shows));
 
@@ -100,7 +103,7 @@ public class MyShowsFragment extends Fragment implements ShowListAdapter.OnItemC
             view.findViewById(R.id.no_shows_found).setVisibility(View.VISIBLE);
         else
             view.findViewById(R.id.no_shows_found).setVisibility(View.GONE);*/
-
+        saveShowsLocally();
         ShowListAdapter showListAdapter = new ShowListAdapter(list, getActivity());
         showListAdapter.setOnItemClickListener(this);
         recyclerView.setAdapter(showListAdapter);
@@ -127,6 +130,14 @@ public class MyShowsFragment extends Fragment implements ShowListAdapter.OnItemC
         }
         if(index > -1) {
             list.remove(index);
+        }
+    }
+
+    private void saveShowsLocally() {
+        showsDbAdapter.deleteFavourites();
+
+        for(ShowDto elem: list) {
+            showsDbAdapter.addShowToFavourites(elem.getName(), elem.getId());
         }
     }
 }
