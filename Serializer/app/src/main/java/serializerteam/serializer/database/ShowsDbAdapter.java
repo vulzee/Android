@@ -2,8 +2,12 @@ package serializerteam.serializer.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ShowsDbAdapter {
     private SQLiteDatabase db;
@@ -39,6 +43,19 @@ public class ShowsDbAdapter {
     public boolean deleteShoppingListItem(int showId) {
         String where = DbContract.Entries.KEY_SHOW_ID + "=" + showId;
         return db.delete(DbContract.Entries.TABLE_NAME, where, null) > 0;
+    }
+
+    public List<Integer> getFavouriteShowsIds() {
+        List<Integer> showIds = new ArrayList<>();
+        String selectQuery = "SELECT " + DbContract.Entries.KEY_SHOW_ID + " FROM " + DbContract.Entries.TABLE_NAME;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                showIds.add(cursor.getInt(0));
+            } while (cursor.moveToNext());
+        }
+        return showIds;
     }
 
     public void closeDbContext() {

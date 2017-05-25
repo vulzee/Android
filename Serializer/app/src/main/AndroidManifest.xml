@@ -3,7 +3,8 @@
     package="serializerteam.serializer">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <activity
         android:name="com.facebook.CustomTabActivity"
         android:exported="true">
@@ -24,7 +25,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".WelcomeActivity" android:theme="@style/AppTheme.NoActionBar">
+        <activity
+            android:name=".WelcomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -50,24 +53,36 @@
         <activity
             android:name=".ShowDetailsActivity"
             android:label="@string/title_activity_show_details"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
         <receiver
-            android:enabled="true"
             android:name=".services.CheckShowsService"
+            android:enabled="true"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".services.SampleBootReceiver"
+        <receiver
+            android:name=".services.SampleBootReceiver"
             android:enabled="false">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:enabled="true" android:process=":remote" android:name=".services.NotificationService"></receiver>
+        <receiver
+            android:name=".services.NotificationService"
+            android:enabled="true"
+            android:process=":remote" />
+        <receiver android:name=".NextShowWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
 
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/next_show_widget_info" />
+        </receiver>
     </application>
 
 </manifest>
