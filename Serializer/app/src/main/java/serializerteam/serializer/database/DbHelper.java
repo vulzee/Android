@@ -11,12 +11,15 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
         db.execSQL(DbContract.SQL_CREATE_ENTRIES);
+        db.execSQL(DbContract.SQL_CREATE_SETTINGS);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(DbContract.SQL_DELETE_ENTRIES);
+        db.execSQL(DbContract.SQL_DELETE_SETTINGS);
         onCreate(db);
     }
 

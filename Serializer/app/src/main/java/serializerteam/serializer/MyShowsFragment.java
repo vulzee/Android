@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 
@@ -19,7 +21,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import serializerteam.serializer.api.ApiSettings;
 import serializerteam.serializer.database.ShowsDbAdapter;
+import serializerteam.serializer.dto.SettingsDto;
 import serializerteam.serializer.dto.ShowDto;
+import serializerteam.serializer.model.SettingsEntity;
 import serializerteam.serializer.model.showList.ShowListAdapter;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -29,7 +33,7 @@ public class MyShowsFragment extends Fragment implements ShowListAdapter.OnItemC
     private static ArrayList<ShowDto> list = new ArrayList<>();
     private volatile int completedTasks = 0;
     private String userId;
-    private ShowsDbAdapter showsDbAdapter;
+    public ShowsDbAdapter showsDbAdapter;
 
     int[] myFavouriteShows;
     private View view;
@@ -47,6 +51,7 @@ public class MyShowsFragment extends Fragment implements ShowListAdapter.OnItemC
 
         userId = getActivity().getSharedPreferences("serializer", MODE_PRIVATE).getString("userId", null);
         initData();
+        initSettings();
 
         return view;
     }
@@ -102,6 +107,22 @@ public class MyShowsFragment extends Fragment implements ShowListAdapter.OnItemC
                 Toast.makeText(getActivity(), "Couldn't get favourites", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void initSettings() {
+        ApiSettings.usersApi.getSettings(userId).enqueue(new Callback<SettingsDto>() {
+            @Override
+            public void onResponse(Call<SettingsDto> call, Response<SettingsDto> response) {
+                showsDbAdapter.saveSettings(response.body().isAreNotificationsOn(), response.body().getTime());
+            }
+
+            @Override
+            public void onFailure(Call<SettingsDto> call, Throwable t) {
+                Log.e("ERR", t.getMessage());
+            }
+        });
+
+
     }
 
     private void setShowListAdapter() {
