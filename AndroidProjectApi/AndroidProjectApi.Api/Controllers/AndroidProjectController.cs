@@ -46,32 +46,6 @@ namespace AndroidProjectApi.Api.Controllers
         }
 
         [HttpPost]
-        [Route("TurnOffNotyfications/{externalUserId}")]
-        public IHttpActionResult TurnOffNotyfications(string externalUserId)
-        {
-            this.usersRepository.TurnOffNotyfications(externalUserId);
-
-            return Ok();
-        }
-
-        [HttpPost]
-        [Route("TurnOnNotyfications/{externalUserId}")]
-        public IHttpActionResult TurnOnNotyfications(string externalUserId)
-        {
-            this.usersRepository.TurnOnNotyfications(externalUserId);
-
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("AreNotyficationsOn/{externalUserId}")]
-        [ResponseType(typeof(bool))]
-        public IHttpActionResult AreNotyficationsOn(string externalUserId)
-        {
-            return Ok(this.usersRepository.AreUserNotyficationsOn(externalUserId));
-        }
-
-        [HttpPost]
         [Route("DeleteShowForUser")]
         public IHttpActionResult DeleteShowForUser(ExternalForm form)
         {
@@ -92,6 +66,37 @@ namespace AndroidProjectApi.Api.Controllers
                 return Ok();
 
             return Conflict();
+        }
+
+        [HttpPost]
+        [Route("SaveSettings")]
+        public IHttpActionResult SaveSettings(SettingsForm form)
+        {
+            this.usersRepository.SaveUserSettings(form.ExternalUserId, form.AreNotificationsOn, form.Time);
+
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("GetSettings/{externalUserId}")]
+        [ResponseType(typeof(SettingsResponse))]
+        public IHttpActionResult GetSettings(string externalUserId)
+        {
+            var settings = this.usersRepository.GetUserSettings(externalUserId);
+            var result = new SettingsResponse();
+
+            if (settings == null)
+            {
+                result.AreNotificationsOn = true;
+                result.Time = 60;
+            }
+            else
+            {
+                result.AreNotificationsOn = settings.ShowNotyfications;
+                result.Time = settings.TimeBeforeNotification;
+            }
+
+            return Ok(result);
         }
     }
 }

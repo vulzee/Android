@@ -52,6 +52,7 @@
     <Compile Include="Core\Abstract\IContext.cs" />
     <Compile Include="Core\Abstract\IDbFactory.cs" />
     <Compile Include="Core\AndroidApiContext.cs" />
+    <Compile Include="Core\DbInit.cs" />
     <Compile Include="Core\Infrastructure\DbFactory.cs" />
     <Compile Include="Core\Infrastructure\Disposable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

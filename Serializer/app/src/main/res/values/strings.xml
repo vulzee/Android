@@ -39,4 +39,8 @@
 
     <string name="no_shows">No shows found.</string>
 
+    <string name="notifications">Notifications</string>
+    <string name="save_button">Save</string>
+    <string name="notifications_time">Time before notification</string>
+    <string name="time_min">min</string>
 </resources>

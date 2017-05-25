@@ -8,5 +8,7 @@ namespace AndroidProjectApi.Api.Models
         public string UserExtertnalId { get; set; }
 
         public bool ShowNotyfications { get; set; }
+
+        public int TimeBeforeNotification { get; set; }
     }
 }
