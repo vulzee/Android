@@ -58,6 +58,7 @@ public class NotificationService extends BroadcastReceiver {
         PendingIntent pi = PendingIntent.getBroadcast(context, new Random().nextInt(), i, 0);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
+
         if(hour<calendar.get(Calendar.HOUR_OF_DAY))
             return;
         calendar.set(Calendar.HOUR_OF_DAY,hour);
@@ -70,7 +71,7 @@ public class NotificationService extends BroadcastReceiver {
 //                calendar.getTimeInMillis(), pi);
     }
 
-    public void setAlarm(Context context,String title, String episodeTitle, int hour)
+    public void setAlarm(Context context,String title, String episodeTitle, long timeInMillis)
     {
      //  this.title=title;
    //     this.episodeTitle=episodeTitle;
@@ -80,12 +81,12 @@ public class NotificationService extends BroadcastReceiver {
         i.putExtra("episodeTitle",episodeTitle);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY,hour);
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTimeInMillis(System.currentTimeMillis());
+//        calendar.set(Calendar.HOUR_OF_DAY,hour);
 
         am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                calendar.getTimeInMillis(), pi);
+                timeInMillis, pi);
     }
 
     public void cancelAlarm(Context context)

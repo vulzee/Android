@@ -43,4 +43,6 @@
     <string name="save_button">Save</string>
     <string name="notifications_time">Time before notification</string>
     <string name="time_min">min</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>

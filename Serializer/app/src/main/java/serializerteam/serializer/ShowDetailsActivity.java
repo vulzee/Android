@@ -1,6 +1,9 @@
 package serializerteam.serializer;
 
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
@@ -159,6 +162,10 @@ public class ShowDetailsActivity extends AppCompatActivity {
                 if (response.code() == StatusCodes.OK) {
                     changeStarIcon(starButton, true);
                     isFavourite = true;
+                    Context context = getApplicationContext();
+                    ComponentName name = new ComponentName(context, NextShowWidget.class);
+                    int [] ids = AppWidgetManager.getInstance(context).getAppWidgetIds(name);
+                    NextShowWidget.updateAppWidget(getApplicationContext(), AppWidgetManager.getInstance(context), ids[0]);
                 } else {
                     displayError("Already in favourites");
                 }

@@ -30,4 +30,10 @@
     <dimen name="toggle_button_width">144dp</dimen>
     <dimen name="seekbar_width">144dp</dimen>
     <dimen name="notification_label_width">72dp</dimen>
+
+    <!--
+Refer to App Widget Documentation for margin information
+http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
+    -->
+    <dimen name="widget_margin">8dp</dimen>
 </resources>
