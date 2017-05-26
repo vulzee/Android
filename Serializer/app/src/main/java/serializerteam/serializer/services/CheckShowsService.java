@@ -50,6 +50,7 @@ public class CheckShowsService extends BroadcastReceiver
         calendar.setTimeInMillis(System.currentTimeMillis());
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
         String actualDate = format1.format(calendar.getTime());
+
         if ((!wifi.isAvailable() && !mobile.isAvailable())||date.equals(actualDate)) {
             return;
         }
@@ -61,6 +62,7 @@ public class CheckShowsService extends BroadcastReceiver
         NextShowWidget.updateAppWidget(context, AppWidgetManager.getInstance(context), ids[0]);
 
         /////////////////
+
 
         final Context contextTmp=context;
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
