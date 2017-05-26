@@ -58,6 +58,14 @@ public class ShowsDbAdapter {
         return showIds;
     }
 
+    public String getShowName(int id){
+        String selectQuery = "SELECT " + DbContract.Entries.KEY_NAME+ " FROM " + DbContract.Entries.TABLE_NAME +" WHERE "+DbContract.Entries.KEY_SHOW_ID +"="+id;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        cursor.moveToFirst();
+        return cursor.getString(0);
+    }
+
     public void closeDbContext() {
         dbHelper.close();
     }

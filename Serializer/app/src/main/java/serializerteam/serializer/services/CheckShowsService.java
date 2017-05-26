@@ -21,17 +21,18 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import serializerteam.serializer.R;
 import serializerteam.serializer.api.ApiSettings;
+import serializerteam.serializer.database.ShowsDbAdapter;
 import serializerteam.serializer.dto.EpisodeDto;
 import serializerteam.serializer.dto.ShowDto;
 
 import static android.content.Context.MODE_PRIVATE;
+import static java.lang.Math.abs;
 
 public class CheckShowsService extends BroadcastReceiver
 {
     public static String date="";
     //o tyle godzin i minut ma byc wczesniej przypomniane
-    public int notifyHour=1;
-    public int notifyMinute=0;
+    public static int notifyMinute=60;
     @Override
     public void onReceive(Context context, Intent intent)
     {
@@ -84,6 +85,7 @@ public class CheckShowsService extends BroadcastReceiver
 //need to be somewhere else
     private void getNextEpisode( final Context context,final int showId) {
         Calendar calendar = Calendar.getInstance();
+
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
         String formatted = format1.format(calendar.getTime());
         ApiSettings.episodeApi.getEpisodeByDate(showId,formatted).enqueue(new Callback<EpisodeDto[]>() {
@@ -92,13 +94,19 @@ public class CheckShowsService extends BroadcastReceiver
                 if (response.body() != null) {
                     EpisodeDto[] e=response.body();
                     for(int m=0;m<e.length;m++) {
-                        int hour = Integer.parseInt(e[m].getAirtime().substring(0, 2)) - notifyHour;
-                        hour = notifyMinute > 0 ? hour - 1 : hour;
-                        int minute = Integer.parseInt(e[m].getAirtime().substring(e[m].getAirtime().length() - 2, e[m].getAirtime().length())) - notifyMinute;
-                        minute = minute < 0 ? minute + 60 : minute;
+                        int hour = Integer.parseInt(e[m].getAirtime().substring(0, 2));// - notifyHour;
+                        //hour = notifyMinute > 0 ? hour - 1 : hour;
+                        int minute = Integer.parseInt(e[m].getAirtime().substring(e[m].getAirtime().length() - 2, e[m].getAirtime().length()));// - notifyMinute;
+                        //minute = minute < 0 ? minute + 60 : minute;
                         NotificationService ns = new NotificationService();
-                        //TODO
-                        ns.setAlarm(context, "Episode is coming!", e[m].getName(), hour, minute);
+
+                        ShowsDbAdapter dbAdapter = new ShowsDbAdapter(context);
+                        Calendar c = Calendar.getInstance();
+                        c.set(Calendar.HOUR_OF_DAY,hour);
+                        c.set(Calendar.MINUTE,minute);
+                        c.add(Calendar.MINUTE,-abs(notifyMinute));
+                        ns.setAlarm(context, dbAdapter.getShowName(showId), e[m].getName(), c.getTimeInMillis());
+                        dbAdapter.closeDbContext();
                     }
                 }
             }

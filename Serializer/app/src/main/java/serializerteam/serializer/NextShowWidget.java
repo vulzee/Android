@@ -3,7 +3,11 @@ package serializerteam.serializer;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.RemoteViews;
 
 import com.google.gson.Gson;
@@ -11,26 +15,37 @@ import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.zip.Inflater;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import serializerteam.serializer.adapter.WidgetListAdapter;
+import serializerteam.serializer.adapter.WidgetService;
 import serializerteam.serializer.api.ApiSettings;
 import serializerteam.serializer.database.ShowsDbAdapter;
 import serializerteam.serializer.dto.EpisodeDto;
 import serializerteam.serializer.dto.ShowDto;
+
+import static java.util.Collections.min;
 
 /**
  * Implementation of App Widget functionality.
  */
 public class NextShowWidget extends AppWidgetProvider {
 
+
+    private static ListView listView ;
+    private static ArrayAdapter<String> adapter ;
     private static volatile int completedTasks = 0;
-    public static final HashMap<ShowDto, Date> list = new HashMap<>();
+    public static final HashMap<String,ShowDto> list = new HashMap<>();
 
     static void updateAppWidget(final Context context, final AppWidgetManager appWidgetManager,
                                 final int appWidgetId) {
@@ -80,18 +95,37 @@ public class NextShowWidget extends AppWidgetProvider {
         // Enter relevant functionality for when the last widget is disabled
     }
 
-    private static void updateWidgetData(Context context, CharSequence widgetText, CharSequence nextEpisode, String imageUrl, int[] ids, AppWidgetManager appWidgetManager) {
+    private static void updateWidgetData(Context context, int[] ids, AppWidgetManager appWidgetManager) {
         //TODO - refactor this to handle list of shows
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.next_show_widget);
-        views.setTextViewText(R.id.appwidget_text, widgetText);
-        views.setTextViewText(R.id.widget_next_episode, nextEpisode);
-        if (!imageUrl.isEmpty()) {
-            Picasso.with(context).load(imageUrl).into(views, R.id.widget_image, ids);
-        } else {
-            Picasso.with(context).load(imageUrl).into(views, R.id.widget_image, ids); // tu się wywala pusty URL
-        }
+            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.next_show_widget);
+            String e=min(list.keySet());
+            views.setTextViewText(R.id.appwidget_text, list.get(e).getName());
+            views.setTextViewText(R.id.widget_next_episode, e);
 
-        // Instruct the widget manager to update the widget
+            String imageUri = "";
+            if (list.get(e).getImage() != null)
+                imageUri =list.get(e).getImage().values().iterator().next();
+            if (!imageUri.isEmpty()) {
+                Picasso.with(context).load(imageUri).into(views, R.id.widget_image, ids);
+            } else {
+                //Picasso.with(context).load(imageUrl).into(views, R.id.widget_image, ids); // tu się wywala pusty URL
+            }
+
+
+//        listView = (ListView) LayoutInflater.from(context).inflate(R.layout.next_show_widget,null).findViewById(R.id.listView);
+//        String[] gupiaLista = new String[2*list.size()];
+//        int counter=0;
+//        for(ShowDto e : list.keySet()){
+//            gupiaLista[counter]=e.getName();
+//            gupiaLista[list.size()+counter]=list.get(e);
+//            counter++;
+//        }
+//        adapter = new WidgetListAdapter(context,gupiaLista);
+//        listView.setAdapter(adapter);
+//       // views.setRe
+//        views.setRemoteAdapter(ids[0],R.id.listView,new Intent(context,WidgetService.class));
+
+       // views.addView(R.id.listView,listView);
         appWidgetManager.updateAppWidget(ids[0], views);
     }
 
@@ -102,44 +136,46 @@ public class NextShowWidget extends AppWidgetProvider {
             ApiSettings.urlApi.getResponse(showDto.getLinks().get("nextepisode").href).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    try {
+
                         EpisodeDto episode = new Gson().fromJson(response.body().charStream(), EpisodeDto.class);
-                        Date date;
+                        String date;
                         if(!episode.getAirtime().isEmpty()) {
-                            String dateTime = episode.getAirdate() + " " + episode.getAirtime();
-                            date = simpleDateTimeFormat.parse(dateTime);
+
+                            date = episode.getAirdate() + " " + episode.getAirtime();
+                            //date = simpleDateTimeFormat.parse(date);
                         }
                         else {
-                            String dateTime = episode.getAirdate();
-                            date = simpleDateFormat.parse(dateTime);
+                            date = episode.getAirdate();
+                            //date = simpleDateFormat.format(date);
                         }
-                        list.put(showDto, date);
+                        list.put( date,showDto);
                         completedTasks++;
                         if (completedTasks == size) {
                             int[] ids = new int[1];
                             ids[0] = appWidgetId;
-                            CharSequence widgetText = context.getString(R.string.appwidget_text);
-                            CharSequence nextEpisode = "Next episode: " + list.values().toArray()[0];
-                            String imageUrl = "";
+                            //CharSequence widgetText = context.getString(R.string.appwidget_text);
+                           // CharSequence nextEpisode = "Next episode: " + list.values().toArray()[0];
+                          //  String imageUrl = "";
 
-                            updateWidgetData(context, widgetText, nextEpisode, imageUrl, ids, appWidgetManager);
+                            updateWidgetData(context, ids, appWidgetManager);
                         }
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                    Log.d("WIDGET","Can not get show.");
+                        completedTasks++;
                 }
             });
         }
         else {
             completedTasks++;
-            list.put(showDto, null);
+            //list.put(showDto, null);
             if (completedTasks == size) {
-                //TODO update
+                int[] ids = new int[1];
+                ids[0] = appWidgetId;
+                updateWidgetData(context, ids, appWidgetManager);
             }
         }
     }

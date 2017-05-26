@@ -10,6 +10,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import serializerteam.serializer.api.ApiSettings;
+import serializerteam.serializer.dto.SettingsDto;
 import serializerteam.serializer.services.CheckShowsService;
 import serializerteam.serializer.services.NotificationService;
 
@@ -24,8 +29,20 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         mRadarView = (RadarView) findViewById(R.id.radarView);
+       ApiSettings.usersApi.getSettings(getSharedPreferences("serializer", MODE_PRIVATE).getString("userId", null)).enqueue(new Callback<SettingsDto>() {
+           @Override
+           public void onResponse(Call<SettingsDto> call, Response<SettingsDto> response) {
+               CheckShowsService.notifyMinute=response.body().getTime();
+               if(response.body().isAreNotificationsOn())
+                    enableReceiver();
+           }
 
-       enableReceiver();
+           @Override
+           public void onFailure(Call<SettingsDto> call, Throwable t) {
+                    Log.d("SETTINGS","Error occured.");
+           }
+       });
+
     }
 
     private void enableReceiver(){

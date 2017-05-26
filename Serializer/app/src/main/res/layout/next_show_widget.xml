@@ -38,7 +38,14 @@
             android:textColor="#ffffff"
             android:textSize="12sp"
             android:textStyle="bold|italic"/>
+        <!--<ListView-->
+            <!--android:id="@+id/listView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_centerHorizontal="true" >-->
 
+        <!--</ListView>-->
     </LinearLayout>
 
 
