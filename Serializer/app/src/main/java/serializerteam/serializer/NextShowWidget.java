@@ -47,7 +47,7 @@ public class NextShowWidget extends AppWidgetProvider {
     private static volatile int completedTasks = 0;
     public static final HashMap<String,ShowDto> list = new HashMap<>();
 
-    static void updateAppWidget(final Context context, final AppWidgetManager appWidgetManager,
+    public static void updateAppWidget(final Context context, final AppWidgetManager appWidgetManager,
                                 final int appWidgetId) {
 
         ShowsDbAdapter showsDbAdapter = new ShowsDbAdapter(context).getDbContext();

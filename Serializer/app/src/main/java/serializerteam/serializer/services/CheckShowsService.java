@@ -3,7 +3,9 @@ package serializerteam.serializer.services;
 import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -19,6 +21,7 @@ import java.util.HashMap;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import serializerteam.serializer.NextShowWidget;
 import serializerteam.serializer.R;
 import serializerteam.serializer.api.ApiSettings;
 import serializerteam.serializer.database.ShowsDbAdapter;
@@ -53,10 +56,9 @@ public class CheckShowsService extends BroadcastReceiver
 
         ////////////////
 
-//
-//        NotificationService ns = new NotificationService();
-//        //TODO
-//        ns.setAlarm(context, "Episode is coming!", "jaki tam ep", 10, 16);
+        ComponentName name = new ComponentName(context, NextShowWidget.class);
+        int [] ids = AppWidgetManager.getInstance(context).getAppWidgetIds(name);
+        NextShowWidget.updateAppWidget(context, AppWidgetManager.getInstance(context), ids[0]);
 
         /////////////////
 
