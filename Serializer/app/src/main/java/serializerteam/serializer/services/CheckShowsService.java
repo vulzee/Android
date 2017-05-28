@@ -59,8 +59,10 @@ public class CheckShowsService extends BroadcastReceiver
 
         ComponentName name = new ComponentName(context, NextShowWidget.class);
         int [] ids = AppWidgetManager.getInstance(context).getAppWidgetIds(name);
-        NextShowWidget.updateAppWidget(context, AppWidgetManager.getInstance(context), ids[0]);
 
+        if(ids.length > 0) {
+            NextShowWidget.updateAppWidget(context, AppWidgetManager.getInstance(context), ids[0]);
+        }
         /////////////////
 
 

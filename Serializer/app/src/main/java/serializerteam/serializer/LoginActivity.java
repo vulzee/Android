@@ -36,7 +36,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        initializeGoogle();
         initializeFacebook();
         if(isLoggedIn()) {
             onLoginSuccessful();
@@ -45,12 +44,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.sign_in_button:
-                googleSignIn();
-                break;
-            // ...
-        }
+
     }
 
     private void googleSignIn() {
@@ -84,17 +78,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Toast.makeText(this, R.string.connection_failed, Toast.LENGTH_LONG).show();
-    }
-
-    private void initializeGoogle() {
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-        findViewById(R.id.sign_in_button).setOnClickListener(this);
     }
 
     private void initializeFacebook() {
@@ -132,10 +115,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private boolean isLoggedIn() {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         if(accessToken != null){
-            Log.v("aaaaaaaaaaaaaaaa", accessToken.getUserId());
             saveId(accessToken.getUserId());
         }
-        return AccessToken.getCurrentAccessToken() != null || mGoogleApiClient.isConnected();
+        return AccessToken.getCurrentAccessToken() != null;
     }
 
     private void saveId(String userId){
