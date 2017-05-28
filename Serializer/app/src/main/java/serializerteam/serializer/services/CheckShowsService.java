@@ -104,7 +104,7 @@ public class CheckShowsService extends BroadcastReceiver
                         //minute = minute < 0 ? minute + 60 : minute;
                         NotificationService ns = new NotificationService();
 
-                        ShowsDbAdapter dbAdapter = new ShowsDbAdapter(context);
+                        ShowsDbAdapter dbAdapter = new ShowsDbAdapter(context).getDbContext();
                         Calendar c = Calendar.getInstance();
                         c.set(Calendar.HOUR_OF_DAY,hour);
                         c.set(Calendar.MINUTE,minute);

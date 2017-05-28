@@ -61,8 +61,9 @@ public class ShowsDbAdapter {
     public String getShowName(int id){
         String selectQuery = "SELECT " + DbContract.Entries.KEY_NAME+ " FROM " + DbContract.Entries.TABLE_NAME +" WHERE "+DbContract.Entries.KEY_SHOW_ID +"="+id;
         Cursor cursor = db.rawQuery(selectQuery, null);
-
+        if(cursor.getCount()==0) return "";
         cursor.moveToFirst();
+
         return cursor.getString(0);
     }
 
