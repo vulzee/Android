@@ -51,7 +51,7 @@ public class CheckShowsService extends BroadcastReceiver
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
         String actualDate = format1.format(calendar.getTime());
 
-        if ((!wifi.isAvailable() && !mobile.isAvailable())||date.equals(actualDate)) {
+        if (!wifi.isAvailable() && !mobile.isAvailable()) {
             return;
         }
 
@@ -100,9 +100,14 @@ public class CheckShowsService extends BroadcastReceiver
                 if (response.body() != null) {
                     EpisodeDto[] e=response.body();
                     for(int m=0;m<e.length;m++) {
-                        int hour = Integer.parseInt(e[m].getAirtime().substring(0, 2));// - notifyHour;
+						int hour=0;
+						int minute=0;
+						if(e[m].getAirtime().length>0)
+						{
+							hour = Integer.parseInt(e[m].getAirtime().substring(0, 2));// - notifyHour;
                         //hour = notifyMinute > 0 ? hour - 1 : hour;
-                        int minute = Integer.parseInt(e[m].getAirtime().substring(e[m].getAirtime().length() - 2, e[m].getAirtime().length()));// - notifyMinute;
+							minute = Integer.parseInt(e[m].getAirtime().substring(e[m].getAirtime().length() - 2, e[m].getAirtime().length()));// - notifyMinute;
+						}
                         //minute = minute < 0 ? minute + 60 : minute;
                         NotificationService ns = new NotificationService();
 
