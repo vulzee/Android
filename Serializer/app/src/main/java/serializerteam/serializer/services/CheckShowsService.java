@@ -102,7 +102,7 @@ public class CheckShowsService extends BroadcastReceiver
                     for(int m=0;m<e.length;m++) {
 						int hour=0;
 						int minute=0;
-						if(e[m].getAirtime().length>0)
+						if(e[m].getAirtime().length()>0)
 						{
 							hour = Integer.parseInt(e[m].getAirtime().substring(0, 2));// - notifyHour;
                         //hour = notifyMinute > 0 ? hour - 1 : hour;
